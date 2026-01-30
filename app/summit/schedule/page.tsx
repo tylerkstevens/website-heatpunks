@@ -1,22 +1,29 @@
 import type { Metadata } from 'next';
-import { ScheduleHeader } from '@/components/schedule/ScheduleHeader';
-import { DayTabs } from '@/components/schedule/DayTabs';
-import { getScheduleData } from '@/lib/schedule';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Schedule - Summit 2026',
-  description: 'Full schedule for Heatpunk Summit 2026. View talks, workshops, panels, and demos happening February 26-28 in Denver.',
+  description: 'Schedule for Heatpunk Summit 2026 coming soon. February 27-28 in Denver, Colorado.',
 };
 
 export default function SchedulePage() {
-  const scheduleData = getScheduleData();
-
   return (
-    <div className="relative py-12 md:py-16 bg-[var(--background)] min-h-screen">
+    <div className="relative py-12 md:py-16 bg-[var(--background)] min-h-screen flex items-center justify-center">
       <div className="noise-overlay" />
-      <div className="relative z-10 section-container">
-        <ScheduleHeader summit={scheduleData.summit} days={scheduleData.days} />
-        <DayTabs days={scheduleData.days} summit={scheduleData.summit} />
+      <div className="relative z-10 text-center px-4">
+        <span className="section-tag">[SCHEDULE]</span>
+        <h1 className="font-mono text-3xl md:text-5xl font-bold tracking-wide mt-4 mb-6">
+          COMING <span className="text-[var(--accent)]">SOON</span>
+        </h1>
+        <p className="text-[var(--muted)] text-sm md:text-base max-w-md mx-auto mb-8">
+          The full Summit 2026 schedule is being finalized. Check back soon for talks, workshops, and demos.
+        </p>
+        <div className="font-mono text-xs text-[var(--terminal-color)]">
+          {'// FEBRUARY 27-28, 2026 • DENVER, CO'}
+        </div>
+        <Link href="/summit" className="btn-secondary mt-8 inline-block">
+          ← BACK TO SUMMIT
+        </Link>
       </div>
     </div>
   );

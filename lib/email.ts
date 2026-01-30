@@ -8,6 +8,15 @@ interface SendEmailParams {
   message: string;
 }
 
+export interface SummitInvitationData {
+  name: string;
+  email: string;
+  company: string;
+  industryFocus: string;
+  whyAttend: string;
+  contribution: string;
+}
+
 function getTransporter() {
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -22,11 +31,12 @@ function getTransporter() {
 
 export async function sendContactEmail({ name, email, message }: SendEmailParams): Promise<boolean> {
   const transporter = getTransporter();
+  const contactEmail = process.env.CONTACT_EMAIL || 'contact@heatpunks.org';
 
   try {
     await transporter.sendMail({
       from: process.env.SMTP_USER,
-      to: process.env.SMTP_USER, // Send to the same address (admin@heatpunks.org)
+      to: contactEmail,
       replyTo: email,
       subject: `[Heatpunks Contact] Message from ${name}`,
       text: `
@@ -174,6 +184,69 @@ ${escapeHtml(application.background).replace(/\n/g, '<br>')}
     return true;
   } catch (error) {
     console.error('Failed to send grant application email:', error);
+    return false;
+  }
+}
+
+export async function sendSummitInvitation(data: SummitInvitationData): Promise<boolean> {
+  const transporter = getTransporter();
+  const summitEmail = process.env.SUMMIT_EMAIL || 'summit@heatpunks.org';
+
+  const textContent = `
+SUMMIT 2026 INVITATION REQUEST
+==============================
+
+APPLICANT INFORMATION
+---------------------
+Name: ${data.name}
+Email: ${data.email}
+Company/Organization: ${data.company}
+Industry Focus: ${data.industryFocus}
+
+WHY INTERESTED IN ATTENDING
+---------------------------
+${data.whyAttend}
+
+HOW THEY CAN CONTRIBUTE
+-----------------------
+${data.contribution}
+  `.trim();
+
+  const htmlContent = `
+<h1 style="color: #f97316; border-bottom: 2px solid #f97316; padding-bottom: 10px;">Summit 2026 Invitation Request</h1>
+
+<h2 style="color: #333; margin-top: 24px;">Applicant Information</h2>
+<table style="border-collapse: collapse; width: 100%; max-width: 600px;">
+  <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Name:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(data.name)}</td></tr>
+  <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Email:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><a href="mailto:${escapeHtml(data.email)}">${escapeHtml(data.email)}</a></td></tr>
+  <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Company/Organization:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(data.company)}</td></tr>
+  <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Industry Focus:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escapeHtml(data.industryFocus)}</td></tr>
+</table>
+
+<h3 style="color: #666; margin-top: 24px;">Why They're Interested in Attending</h3>
+<div style="background: #f9f9f9; padding: 16px; border-left: 3px solid #f97316; margin-bottom: 16px;">
+${escapeHtml(data.whyAttend).replace(/\n/g, '<br>')}
+</div>
+
+<h3 style="color: #666; margin-top: 16px;">How They Can Contribute</h3>
+<div style="background: #f9f9f9; padding: 16px; border-left: 3px solid #f97316; margin-bottom: 16px;">
+${escapeHtml(data.contribution).replace(/\n/g, '<br>')}
+</div>
+  `.trim();
+
+  try {
+    await transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: summitEmail,
+      replyTo: data.email,
+      subject: `[Summit 2026] Invitation Request - ${data.name} (${data.company})`,
+      text: textContent,
+      html: htmlContent,
+    });
+
+    return true;
+  } catch (error) {
+    console.error('Failed to send summit invitation email:', error);
     return false;
   }
 }

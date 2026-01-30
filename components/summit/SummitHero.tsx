@@ -1,6 +1,9 @@
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
 import type { Summit, Sponsor } from '@/types/schedule';
-import { siteConfig } from '@/data/site';
+import { InvitationModal } from './InvitationModal';
 
 interface SummitHeroProps {
   summit: Summit;
@@ -8,6 +11,8 @@ interface SummitHeroProps {
 }
 
 export function SummitHero({ summit, sponsors }: SummitHeroProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -54,13 +59,13 @@ export function SummitHero({ summit, sponsors }: SummitHeroProps) {
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-10">
-            <a
-              href={`mailto:${siteConfig.contact.email}?subject=Summit ${summit.year} Waitlist`}
+            <button
+              onClick={() => setIsModalOpen(true)}
               className="btn-primary group"
             >
               <span className="relative z-10">REQUEST INVITATION</span>
               <span className="btn-heat" />
-            </a>
+            </button>
 
             <a
               href="https://www.youtube.com/watch?v=c-NrYzmPRv8"
@@ -133,12 +138,19 @@ export function SummitHero({ summit, sponsors }: SummitHeroProps) {
       <div className="bg-[var(--background-alt)] border-t border-b border-[var(--card-border)] py-4 overflow-x-auto">
         <div className="flex justify-center gap-8 md:gap-16 px-4 min-w-max">
           <Stat value="2" label="DAYS" />
-          <Stat value="50+" label="BUILDERS" />
-          <Stat value="4" label="WORKSHOPS" />
+          <Stat value="150+" label="BUILDERS" />
+          <Stat value="4+" label="WORKSHOPS" />
           <Stat value="10+" label="DEMOS" />
           <Stat value="1" label="SKI DAY" />
         </div>
       </div>
+
+      {/* Invitation Modal */}
+      <InvitationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        year={summit.year}
+      />
     </>
   );
 }

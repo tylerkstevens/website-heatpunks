@@ -37,7 +37,7 @@ export function CTASection() {
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto mt-12 pt-8 border-t border-[var(--card-border)]">
           <div>
-            <p className="font-mono text-2xl md:text-3xl font-bold text-[var(--accent)]">50+</p>
+            <p className="font-mono text-2xl md:text-3xl font-bold text-[var(--accent)]">150+</p>
             <p className="font-mono text-[10px] text-[var(--muted)] tracking-wider">BUILDERS</p>
           </div>
           <div>

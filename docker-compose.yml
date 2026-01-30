@@ -21,6 +21,9 @@ services:
       - SMTP_SECURE=${SMTP_SECURE:-false}
       - SMTP_USER=${SMTP_USER:-}
       - SMTP_PASS=${SMTP_PASS:-}
+      - CONTACT_EMAIL=${CONTACT_EMAIL:-contact@heatpunks.org}
+      - GRANTS_EMAIL=${GRANTS_EMAIL:-grants@heatpunks.org}
+      - SUMMIT_EMAIL=${SUMMIT_EMAIL:-summit@heatpunks.org}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000"]
