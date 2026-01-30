@@ -1,0 +1,95 @@
+import Link from 'next/link';
+import { siteConfig } from '@/data/site';
+
+export function HeroSection() {
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Flame background gradient - uses theme-aware CSS class */}
+      <div className="absolute inset-0 animate-flame-glow flame-bg" />
+
+      {/* Noise overlay */}
+      <div className="noise-overlay" />
+
+      {/* Scan lines */}
+      <div className="scan-lines" />
+
+      {/* Content */}
+      <div className="relative z-10 section-container text-center py-24">
+        {/* Title */}
+        <h1 className="font-mono text-[clamp(2.5rem,12vw,7rem)] font-extrabold leading-none tracking-tight mb-2">
+          <span className="text-flame-gradient animate-text-glow">HASHRATE</span>
+        </h1>
+        <h2 className="font-mono text-[clamp(1.5rem,6vw,3rem)] font-bold tracking-[0.3em] text-[var(--foreground)] opacity-90 mb-6">
+          HEATPUNKS
+        </h2>
+
+        {/* Tagline */}
+        <p className="font-mono text-xs tracking-[0.2em] text-[var(--terminal-color)] mb-8">
+          // UNDERMINING THE STATUS QUO
+        </p>
+
+        {/* Description */}
+        <p className="text-[var(--muted)] text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+          A community of <span className="text-highlight">bitcoiners</span> and{' '}
+          <span className="text-highlight">heating industry specialists</span>{' '}
+          bringing hashrate back home into heating appliances and infrastructure.
+        </p>
+
+        {/* Meta info */}
+        <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-10 font-mono text-xs text-[var(--muted)]">
+          <span>
+            <span className="text-[var(--accent)]">STATUS:</span>{' '}
+            <span className="animate-blink">ACTIVE</span>
+          </span>
+          <span className="text-[var(--card-border)] hidden md:inline">|</span>
+          <span>
+            <span className="text-[var(--accent)]">MISSION:</span> HEAT WITH HASHRATE
+          </span>
+          <span className="text-[var(--card-border)] hidden md:inline">|</span>
+          <span>
+            <span className="text-[var(--accent)]">ORG:</span>{' '}
+            <a href={siteConfig.foundation.url} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent)] transition-colors">
+              256 FOUNDATION
+            </a>
+          </span>
+        </div>
+
+        {/* CTAs */}
+        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+          <a
+            href={siteConfig.links.forum}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary group"
+          >
+            <span className="relative z-10">DIVE INTO FORUM</span>
+            <span className="btn-heat" />
+          </a>
+
+          <a
+            href={siteConfig.links.telegram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-outline"
+          >
+            JOIN TELEGRAM
+          </a>
+
+          <Link href="/summit" className="btn-secondary">
+            ATTEND SUMMIT
+          </Link>
+
+          <Link href="/education" className="btn-secondary">
+            LEARN
+          </Link>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+          <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--muted)]">SCROLL</span>
+          <div className="w-px h-10 bg-gradient-to-b from-[var(--accent)] to-transparent animate-scroll-pulse" />
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,525 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   HEATPUNK DESIGN SYSTEM
+   Dark Mode (Default) + Light Mode Support
+   ======================================== */
+
+:root {
+  /* Core palette - Dark Mode (Cypherpunk) */
+  --black: #0a0a0a;
+  --dark: #121212;
+  --dark-alt: #1a1a1a;
+  --gray: #2a2a2a;
+  --gray-light: #888888;
+  --white: #f5f5f5;
+
+  /* Accent colors (shared between modes) */
+  --flame: #ff6b00;
+  --flame-light: #ff8c33;
+  --flame-dark: #cc5500;
+  --red: #ff3d00;
+  --terminal: #00ff41;
+  --bitcoin: #f7931a;
+
+  /* Light mode palette - Warm/Heated Paper */
+  --cream: #faf8f5;
+  --cream-dark: #f0ebe3;
+  --warm-white: #fffcf7;
+  --warm-gray: #e8e4de;
+  --warm-gray-dark: #d4cfc6;
+  --charcoal: #2d2a26;
+  --charcoal-light: #4a4640;
+  --ember: #c94e00;
+  --terminal-dark: #008f24;
+
+  /* Fonts */
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+
+  /* Theme variables - Dark Mode Default */
+  --background: var(--black);
+  --background-alt: var(--dark);
+  --foreground: var(--white);
+  --foreground-muted: var(--gray-light);
+  --card-background: var(--dark);
+  --card-background-hover: var(--dark-alt);
+  --card-border: var(--gray);
+  --card-border-hover: var(--flame);
+  --muted: var(--gray-light);
+  --accent: var(--flame);
+  --accent-light: var(--flame-light);
+  --accent-contrast: var(--black);
+  --terminal-color: var(--terminal);
+  --tag-background: var(--gray);
+  --tag-text: var(--white);
+  --input-background: var(--dark-alt);
+  --input-border: var(--gray);
+  --scrollbar-track: var(--dark);
+  --scrollbar-thumb: var(--gray);
+  --noise-opacity: 0.03;
+  --scanline-opacity: 0.1;
+  --glow-opacity: 0.4;
+}
+
+/* ========================================
+   LIGHT MODE - Warm Heated Paper Theme
+   ======================================== */
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: var(--cream);
+    --background-alt: var(--cream-dark);
+    --foreground: var(--charcoal);
+    --foreground-muted: var(--charcoal-light);
+    --card-background: var(--warm-white);
+    --card-background-hover: var(--cream);
+    --card-border: var(--warm-gray);
+    --card-border-hover: var(--ember);
+    --muted: var(--charcoal-light);
+    --accent: var(--ember);
+    --accent-light: var(--flame);
+    --accent-contrast: var(--warm-white);
+    --terminal-color: var(--terminal-dark);
+    --tag-background: var(--warm-gray);
+    --tag-text: var(--charcoal);
+    --input-background: var(--warm-white);
+    --input-border: var(--warm-gray-dark);
+    --scrollbar-track: var(--cream-dark);
+    --scrollbar-thumb: var(--warm-gray-dark);
+    --noise-opacity: 0.015;
+    --scanline-opacity: 0.03;
+    --glow-opacity: 0.2;
+
+    /* Override core colors for consistency */
+    --black: var(--charcoal);
+    --dark: var(--cream-dark);
+    --dark-alt: var(--warm-white);
+    --gray: var(--warm-gray);
+    --gray-light: var(--charcoal-light);
+    --white: var(--cream);
+    --flame: var(--ember);
+    --terminal: var(--terminal-dark);
+  }
+}
+
+/* Color scheme support */
+html {
+  color-scheme: dark light;
+}
+
+@media (prefers-color-scheme: light) {
+  html {
+    color-scheme: light;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ========================================
+   VISUAL EFFECTS
+   ======================================== */
+
+/* Noise overlay effect */
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: var(--noise-opacity);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Scan lines effect (CRT monitor) - subtle in light mode */
+.scan-lines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,var(--scanline-opacity)) 2px,
+    rgba(0,0,0,var(--scanline-opacity)) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Flame glow background effect - adapts to theme */
+.flame-bg {
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(255,107,0,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 80%, rgba(255,61,0,0.1) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 80%, rgba(255,61,0,0.1) 0%, transparent 40%),
+    linear-gradient(180deg, var(--background) 0%, var(--background-alt) 100%);
+}
+
+@media (prefers-color-scheme: light) {
+  .flame-bg {
+    background:
+      radial-gradient(ellipse at 50% 100%, rgba(201,78,0,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 80%, rgba(255,107,0,0.05) 0%, transparent 40%),
+      radial-gradient(ellipse at 80% 80%, rgba(255,107,0,0.05) 0%, transparent 40%),
+      linear-gradient(180deg, var(--background) 0%, var(--background-alt) 100%);
+  }
+}
+
+/* Heat shimmer on buttons */
+.btn-heat {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.5s;
+}
+
+.group:hover .btn-heat,
+button:hover .btn-heat,
+a:hover .btn-heat {
+  transform: translateX(100%);
+}
+
+/* Flame bar animation */
+.flame-bar {
+  height: 4px;
+  background: linear-gradient(90deg, var(--red), var(--accent), var(--accent-light), var(--accent), var(--red));
+  background-size: 200% 100%;
+  animation: flameWave 3s linear infinite;
+}
+
+@media (prefers-color-scheme: light) {
+  .flame-bar {
+    background: linear-gradient(90deg, #cc3300, var(--ember), var(--flame), var(--ember), #cc3300);
+    background-size: 200% 100%;
+  }
+}
+
+@keyframes flameWave {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+
+/* Monospace headers */
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Section tags like [001] */
+.section-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+/* Terminal-style prefix */
+.terminal-prefix::before {
+  content: '> ';
+  color: var(--terminal-color);
+}
+
+/* Highlighted text */
+.text-highlight {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Gradient text (flame) */
+.text-flame-gradient {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--red) 50%, var(--accent-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media (prefers-color-scheme: light) {
+  .text-flame-gradient {
+    background: linear-gradient(135deg, var(--ember) 0%, #cc3300 50%, var(--flame) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--red) 100%);
+  color: var(--accent-contrast);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(255,107,0,var(--glow-opacity));
+}
+
+@media (prefers-color-scheme: light) {
+  .btn-primary {
+    background: linear-gradient(135deg, var(--ember) 0%, #cc3300 100%);
+    color: var(--warm-white);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 10px 30px rgba(201,78,0,0.25);
+  }
+}
+
+.btn-secondary {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  border: 1px solid var(--card-border);
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-outline {
+  padding: 0.875rem 2rem;
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  border: 2px solid var(--accent);
+  transition: all 0.2s;
+}
+
+.btn-outline:hover {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* ========================================
+   CARDS
+   ======================================== */
+
+.heatpunk-card {
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  padding: 1.5rem;
+  transition: all 0.3s;
+}
+
+.heatpunk-card:hover {
+  border-color: var(--card-border-hover);
+  transform: translateY(-2px);
+}
+
+@media (prefers-color-scheme: light) {
+  .heatpunk-card {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  .heatpunk-card:hover {
+    box-shadow: 0 4px 12px rgba(201,78,0,0.1);
+  }
+}
+
+/* Card with left border accent */
+.heatpunk-card-accent {
+  background: var(--card-background);
+  border-left: 3px solid var(--accent);
+  padding: 1.25rem;
+}
+
+/* ========================================
+   TAGS
+   ======================================== */
+
+.heatpunk-tag {
+  padding: 0.25rem 0.625rem;
+  background: var(--tag-background);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--tag-text);
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+@media (prefers-color-scheme: light) {
+  .heatpunk-tag {
+    border: 1px solid var(--warm-gray-dark);
+  }
+}
+
+/* ========================================
+   FORM INPUTS
+   ======================================== */
+
+input, textarea, select {
+  background: var(--input-background);
+  border: 1px solid var(--input-border);
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+@media (prefers-color-scheme: light) {
+  input:focus, textarea:focus, select:focus {
+    box-shadow: 0 0 0 3px rgba(201,78,0,0.1);
+  }
+}
+
+/* ========================================
+   FOCUS & ACCESSIBILITY
+   ======================================== */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   SCROLLBAR
+   ======================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* ========================================
+   UTILITY ANIMATIONS
+   ======================================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Skeleton loading */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--card-background) 25%,
+    var(--card-border) 50%,
+    var(--card-background) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ========================================
+   RESPONSIVE CONTAINER
+   ======================================== */
+
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ========================================
+   LIGHT MODE SPECIFIC OVERRIDES
+   ======================================== */
+
+@media (prefers-color-scheme: light) {
+  /* Links */
+  a {
+    color: var(--ember);
+  }
+
+  a:hover {
+    color: var(--flame);
+  }
+
+  /* Selection */
+  ::selection {
+    background: rgba(201,78,0,0.2);
+    color: var(--charcoal);
+  }
+
+  /* Horizontal rules */
+  hr {
+    border-color: var(--warm-gray);
+  }
+}
+
+/* Dark mode selection */
+@media (prefers-color-scheme: dark) {
+  ::selection {
+    background: rgba(255,107,0,0.3);
+    color: var(--white);
+  }
+}

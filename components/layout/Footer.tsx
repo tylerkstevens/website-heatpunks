@@ -1,0 +1,144 @@
+import Link from 'next/link';
+import { siteConfig } from '@/data/site';
+
+export function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="bg-[var(--background)]">
+      {/* Manifesto bar */}
+      <div className="border-t border-[var(--card-border)] py-8 text-center">
+        <p className="font-mono text-sm tracking-wider">
+          <span className="block text-[var(--foreground)]">UNDERMINE THE STATUS QUO.</span>
+          <span className="block text-[var(--accent)] animate-text-glow">THE FUTURE OF BITCOIN MINING IS AT HOME.</span>
+        </p>
+      </div>
+
+      {/* Flame bar */}
+      <div className="flame-bar" />
+
+      {/* Main footer content */}
+      <div className="section-container py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* About / Attribution */}
+          <div>
+            <h3 className="font-mono text-xs tracking-wider text-[var(--terminal-color)] mb-4">&gt; ABOUT</h3>
+            <p className="text-sm text-[var(--muted)] mb-4 leading-relaxed">
+              Hashrate Heatpunks is a community project managed under the{' '}
+              <a
+                href={siteConfig.foundation.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--accent)] hover:text-[var(--accent-light)] transition-colors"
+              >
+                {siteConfig.foundation.name}
+              </a>
+              , a 501(c)(3) nonprofit with the mission of {siteConfig.foundation.mission}.
+            </p>
+            <div className="flex gap-4 font-mono text-xs">
+              <a
+                href={siteConfig.foundation.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                [256.ORG]
+              </a>
+              <a
+                href={siteConfig.foundation.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                [GITHUB]
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="font-mono text-xs tracking-wider text-[var(--terminal-color)] mb-4">&gt; NAVIGATE</h3>
+            <nav className="flex flex-col gap-2">
+              <Link
+                href="/"
+                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                HOME
+              </Link>
+              <Link
+                href="/education"
+                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                EDUCATION
+              </Link>
+              <Link
+                href="/summit"
+                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                SUMMIT
+              </Link>
+              <Link
+                href="/summit/schedule"
+                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                SCHEDULE
+              </Link>
+            </nav>
+          </div>
+
+          {/* Social Links */}
+          <div>
+            <h3 className="font-mono text-xs tracking-wider text-[var(--terminal-color)] mb-4">&gt; CONNECT</h3>
+            <nav className="flex flex-col gap-2">
+              <a
+                href={siteConfig.links.telegram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                TELEGRAM
+              </a>
+              <a
+                href={siteConfig.links.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                X / TWITTER
+              </a>
+              <a
+                href={siteConfig.links.forum}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                FORUM
+              </a>
+              <a
+                href={`mailto:${siteConfig.contact.email}`}
+                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                {siteConfig.contact.email.toUpperCase()}
+              </a>
+            </nav>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="mt-12 pt-8 border-t border-[var(--card-border)]">
+          <p className="font-mono text-[10px] text-[var(--muted)] text-center tracking-wider">
+            &copy; {currentYear} HASHRATE HEATPUNKS — A PROJECT OF THE{' '}
+            <a
+              href={siteConfig.foundation.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--accent)] hover:text-[var(--accent-light)] transition-colors"
+            >
+              256 FOUNDATION
+            </a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
