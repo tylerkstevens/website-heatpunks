@@ -29,18 +29,6 @@ export function LinksSection() {
             <span className="font-mono text-[10px] text-[var(--muted)]">forum.heatpunks.org</span>
           </a>
 
-          {/* X / Twitter */}
-          <a
-            href={siteConfig.links.twitter}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="heatpunk-card flex flex-col items-center gap-3 text-center hover:border-[var(--terminal-color)] hover:shadow-[0_0_20px_rgba(0,255,65,0.15)]"
-          >
-            <span className="text-2xl text-[var(--terminal-color)]">𝕏</span>
-            <span className="font-mono text-xs tracking-wider text-[var(--foreground)]">X / TWITTER</span>
-            <span className="font-mono text-[10px] text-[var(--muted)]">@HashHeatpunks</span>
-          </a>
-
           {/* Telegram */}
           <a
             href={siteConfig.links.telegram}
@@ -51,6 +39,18 @@ export function LinksSection() {
             <span className="text-2xl text-[var(--terminal-color)]">✈</span>
             <span className="font-mono text-xs tracking-wider text-[var(--foreground)]">TELEGRAM</span>
             <span className="font-mono text-[10px] text-[var(--muted)]">t.me/heatpunks</span>
+          </a>
+
+          {/* X / Twitter */}
+          <a
+            href={siteConfig.links.twitter}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="heatpunk-card flex flex-col items-center gap-3 text-center hover:border-[var(--terminal-color)] hover:shadow-[0_0_20px_rgba(0,255,65,0.15)]"
+          >
+            <span className="text-2xl text-[var(--terminal-color)]">𝕏</span>
+            <span className="font-mono text-xs tracking-wider text-[var(--foreground)]">X / TWITTER</span>
+            <span className="font-mono text-[10px] text-[var(--muted)]">@HashHeatpunks</span>
           </a>
         </div>
 

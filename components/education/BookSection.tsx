@@ -27,11 +27,11 @@ export function BookSection() {
               </h2>
 
               <p className="font-mono text-sm text-[var(--flame)] mb-4">
-                // HEAT IS A PRODUCT, NOT A PROBLEM
+                {'// HEAT IS A PRODUCT, NOT A PROBLEM'}
               </p>
 
-              <p className="text-[var(--gray-light)] text-xs font-mono mb-2">
-                BY <span className="text-[var(--white)]">TYLER STEVENS</span>
+              <p className="text-[var(--muted)] text-xs font-mono mb-2">
+                BY <span className="text-[var(--foreground)]">TYLER STEVENS</span>
               </p>
 
               <p className="text-[var(--gray-light)] mb-8 leading-relaxed text-sm">

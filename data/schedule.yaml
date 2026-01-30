@@ -6,11 +6,11 @@ summit:
     day2: "2026-02-28"
   venue:
     name: "The Space"
-    address: "3700 N Franklin Street, Denver, CO"
+    address: "3700 N Franklin St, Denver, CO 80205"
     timezone: "America/Denver"
     coordinates:
-      lat: 39.7697
-      lng: -104.9717
+      lat: 39.7683395586488
+      lng: -104.96816299173025
 
 days:
   - date: "2026-02-26"

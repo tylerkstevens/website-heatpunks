@@ -12,7 +12,6 @@ import { RegistrationSection } from '@/components/summit/RegistrationSection';
 import { SummitCommunitySection } from '@/components/summit/SummitCommunitySection';
 import { SponsorGrid } from '@/components/summit/SponsorGrid';
 import { FAQSection } from '@/components/summit/FAQSection';
-import { ManifestoSection } from '@/components/summit/ManifestoSection';
 import { getScheduleData, getSponsors } from '@/lib/schedule';
 
 export const metadata: Metadata = {
@@ -64,9 +63,6 @@ export default function SummitPage() {
 
       {/* [008] FAQ (interactive) */}
       <FAQSection />
-
-      {/* Manifesto + flame bar */}
-      <ManifestoSection />
     </div>
   );
 }

@@ -38,9 +38,10 @@ A community website for Hashrate Heatpunks - a community of bitcoiners and heati
 
 1. **Landing Page** (`/`)
 2. **Education Page** (`/education`)
-3. **Summit Landing Page** (`/summit`)
-4. **Summit Schedule Page** (`/summit/schedule`)
-5. **Archived Summit Pages** (`/summit/[year]`) - for past summits
+3. **Grants Page** (`/grants`)
+4. **Summit Landing Page** (`/summit`)
+5. **Summit Schedule Page** (`/summit/schedule`)
+6. **Archived Summit Pages** (`/summit/[year]`) - for past summits
 
 ---
 
@@ -119,7 +120,120 @@ Error handling: Hide section on failure
 
 ---
 
-### 3. Summit Landing Page (`/summit`)
+### 3. Grants Page (`/grants`)
+
+A page for grant proposals and information about the Heatpunks/256 Foundation grant program to accelerate global hashrate heating adoption.
+
+#### Program Overview
+
+- **Administered by:** 256 Foundation (501c3 nonprofit)
+- **Eligibility:** Open to anyone worldwide - individuals, teams, companies, universities, nonprofits
+- **Grant amounts:** Case by case, no fixed ranges (applicants specify requested amount in USD)
+- **Payment:** Bitcoin only
+- **Review process:** Rolling/ongoing (no fixed deadlines)
+- **IP requirement:** Funded work must be released under open/permissive license
+
+#### Page Sections (in order)
+
+1. **Hero Section**
+   - Headline: "Build with us" collaborative messaging
+   - Brief intro to the grants program
+   - Primary CTA: "Apply Now" button (scrolls to application form)
+   - Background: Consistent heatpunk aesthetic
+
+2. **Why Section - Industry Challenges**
+   - Explain why grants matter for hashrate heating adoption
+   - Key challenges to address (qualitative, no specific stats):
+     - No established safety standards/certifications (UL, CE, etc.)
+     - Building codes don't recognize hashrate heating
+     - HVAC industry unfamiliar with the technology
+     - Need for documented case studies and real-world performance data
+   - Global scope emphasized - not US-specific
+
+3. **Grant Categories Grid**
+   - Display 5 suggested categories as cards with descriptions
+   - Note that these are suggestions, not exhaustive - other categories welcome
+   - Categories:
+     1. **Technical Standards & Certifications**
+        - Work toward safety certifications (UL, CE), ASHRAE standards, building code integration
+     2. **Academic Research & Publications**
+        - Peer-reviewed research, thermal efficiency studies, ASHRAE publications, academic partnerships
+     3. **Regulatory & Policy Advocacy**
+        - Building code advocacy, permitting guidance, engagement with officials and policymakers
+     4. **Case Studies & Documentation**
+        - Document installations, collect performance data, publish findings for industry reference
+     5. **Educational Content & Training**
+        - Tutorials, training materials, workshops, content for HVAC professionals and builders
+
+4. **Application Form**
+   - Form submits via Next.js API route → sends to grants@heatpunks.org via SMTP
+   - On-page success message after submission (no auto-confirmation email to applicant)
+   - No spam protection
+   - No save draft feature - single session completion expected
+
+   **Form Fields:**
+
+   | Field | Type | Required | Notes |
+   |-------|------|----------|-------|
+   | Full Name | text | Yes | |
+   | Email | email | Yes | |
+   | Organization | text | No | Company, university, nonprofit, or "Independent" |
+   | Country | text | Yes | |
+   | Grant Category | dropdown | Yes | 6 options: 5 categories + "Other" |
+   | Project Title | text | Yes | |
+   | Project Description | textarea | Yes | 3000 character hard limit with counter |
+   | Budget Requested | number | Yes | USD amount, no minimum |
+   | Timeline | textarea | Yes | 3000 character limit, free text description |
+   | Expected Impact & Deliverables | textarea | Yes | 3000 character limit |
+   | Applicant Background | textarea | Yes | 3000 character limit |
+   | References | textarea | No | Optional, free text for 1-2 references with emails |
+   | How did you hear about us? | text | No | |
+
+   **Acknowledgement Checkboxes (all required):**
+   - [ ] I understand grants are paid in Bitcoin
+   - [ ] I agree to make project deliverables publicly available under an open license
+   - [ ] I grant 256 Foundation permission to publicly share information about funded projects
+   - [ ] I understand submitting an application does not guarantee funding
+   - [ ] I consent to being contacted about my application
+
+   **Success Message:**
+   > "Thank you for your application. We review proposals on a rolling basis and will be in touch if we'd like to learn more."
+
+5. **FAQ Section**
+   - Expandable accordion (same style as Summit FAQ)
+   - 8 questions:
+
+   | Question | Answer |
+   |----------|--------|
+   | Who can apply? | Anyone - individuals, teams, companies, universities, and nonprofits from anywhere in the world. |
+   | Are there geographic restrictions? | No. We welcome applications from anywhere globally. Hashrate heating is a worldwide opportunity. |
+   | What categories are funded? | We fund work in technical standards, academic research, regulatory advocacy, case studies, and educational content. These categories are suggestions - we're open to other ideas that advance hashrate heating. |
+   | How much can I request? | There are no fixed grant amounts. Request what you need for your project and justify it in your application. |
+   | How are grants paid? | All grants are paid in Bitcoin. |
+   | What's the review process? | We review applications on a rolling basis. There are no deadlines. If we're interested, we'll reach out to learn more. |
+   | Can I apply multiple times? | Yes. There's no limit on the number of proposals you can submit. |
+   | What if my proposal is rejected? | You can reapply immediately with a revised or new proposal. |
+   | What about intellectual property? | Work funded by these grants must be released under an open/permissive license to benefit the broader community. |
+
+6. **Support/Donate CTA Section**
+   - For people who want to fund the grants program rather than apply
+   - Brief text explaining how donations support hashrate heating research
+   - CTA button linking to 256foundation.org
+
+7. **Contact Section**
+   - Display grants@heatpunks.org for questions about the program
+   - Brief text: "Questions about the grants program? Reach out."
+
+#### Technical Notes
+
+- Character counters only shown on fields with limits
+- Form validation shows inline errors
+- Same accessibility standards as rest of site (WCAG 2.1 AA target)
+- Uses semantic CSS variables for light/dark mode support
+
+---
+
+### 4. Summit Landing Page (`/summit`)
 
 This page shows the current/upcoming summit. Past summits archived at `/summit/[year]`.
 
@@ -149,7 +263,7 @@ This page shows the current/upcoming summit. Past summits archived at `/summit/[
    - Click to expand inline
 
 6. **Venue & Travel**
-   - Address: 3700 N Franklin Street, Denver, Colorado (RiNo District)
+   - Address: 3700 N Franklin St, Denver, CO 80205 (RiNo District)
    - Embedded OpenStreetMap
    - Transit note: Accessible via train from DIA
 
@@ -168,7 +282,7 @@ This page shows the current/upcoming summit. Past summits archived at `/summit/[
 
 ---
 
-### 4. Summit Schedule Page (`/summit/schedule`)
+### 5. Summit Schedule Page (`/summit/schedule`)
 
 #### Layout
 
@@ -215,7 +329,7 @@ summit:
     day2: "2026-02-28"
   venue:
     name: "The Space"
-    address: "3700 N Franklin Street, Denver, CO"
+    address: "3700 N Franklin St, Denver, CO 80205"
     timezone: "America/Denver"
 
 days:
@@ -252,7 +366,7 @@ days:
 
 ---
 
-### 5. Archived Summit Pages (`/summit/[year]`)
+### 6. Archived Summit Pages (`/summit/[year]`)
 
 - Same structure as main summit page
 - Read-only historical record
@@ -265,7 +379,7 @@ days:
 
 ### Navigation Header
 - **Desktop:** Fixed header, horizontal nav links
-  - Home, Education, Summit, Schedule (when summit active)
+  - Home, Education, Grants, Summit, Schedule (when summit active)
 - **Mobile:** Hamburger menu
 - Logo/wordmark links to home
 
@@ -363,6 +477,8 @@ days:
 │   ├── page.tsx              # Landing page
 │   ├── /education
 │   │   └── page.tsx          # Education page
+│   ├── /grants
+│   │   └── page.tsx          # Grants page
 │   ├── /summit
 │   │   ├── page.tsx          # Current summit landing
 │   │   ├── /schedule
@@ -372,6 +488,8 @@ days:
 │   └── /api
 │       ├── /contact
 │       │   └── route.ts      # Contact form handler
+│       ├── /grants
+│       │   └── route.ts      # Grant application handler
 │       └── /forum
 │           └── route.ts      # Discourse proxy (optional)
 ├── /components
@@ -383,6 +501,7 @@ days:
 │   ├── SessionCard.tsx
 │   ├── AddToCalendar.tsx
 │   ├── ContactForm.tsx
+│   ├── GrantsForm.tsx
 │   ├── SponsorGrid.tsx
 │   └── Map.tsx
 ├── /data
@@ -450,6 +569,7 @@ NEXT_PUBLIC_SITE_URL=https://heatpunks.org
    - [ ] Schedule displays with expandable session details
    - [ ] Add-to-calendar generates correct .ics/calendar links
    - [ ] Contact form successfully sends emails
+   - [ ] Grant application form successfully sends emails to grants@heatpunks.org
    - [ ] Video carousel works with expand-inline behavior
    - [ ] Dark/light mode follows system preference
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document defines the technical architecture for the Hashrate Heatpunks community website. The site serves as a hub for the hashrate heating community, featuring a landing page with live forum feed, educational resources, and summit event pages with detailed schedules.
+This document defines the technical architecture for the Hashrate Heatpunks community website. The site serves as a hub for the hashrate heating community, featuring a landing page with live forum feed, educational resources, a grant application system for the 256 Foundation, and summit event pages with detailed schedules.
 
 **Key Characteristics:**
 - Static-first with selective server-side rendering
@@ -19,8 +19,8 @@ This document defines the technical architecture for the Hashrate Heatpunks comm
 │                              BROWSER                                         │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐      │
-│  │  Landing │  │Education │  │  Summit  │  │ Schedule │  │ Archive  │      │
-│  │   Page   │  │   Page   │  │  Landing │  │   Page   │  │  Pages   │      │
+│  │  Landing │  │Education │  │  Grants  │  │  Summit  │  │ Schedule │      │
+│  │   Page   │  │   Page   │  │   Page   │  │  Landing │  │   Page   │      │
 │  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘      │
 │       │             │             │             │             │             │
 │       └─────────────┴─────────────┴─────────────┴─────────────┘             │
@@ -29,6 +29,7 @@ This document defines the technical architecture for the Hashrate Heatpunks comm
 │                    │      Client Components       │                          │
 │                    │  • VideoCarousel             │                          │
 │                    │  • ContactForm               │                          │
+│                    │  • GrantsForm                │                          │
 │                    │  • SessionCard (expand)      │                          │
 │                    │  • AddToCalendar             │                          │
 │                    │  • MobileNav                 │                          │
@@ -52,11 +53,11 @@ This document defines the technical architecture for the Hashrate Heatpunks comm
 │                                                                              │
 │  ┌─────────────────────────────────────────────────────────────────────┐    │
 │  │                        API ROUTES (/app/api)                         │    │
-│  │  ┌─────────────────┐  ┌─────────────────┐                           │    │
-│  │  │  /api/contact   │  │   /api/forum    │                           │    │
-│  │  │  (SMTP send)    │  │ (Discourse proxy)│                           │    │
-│  │  └────────┬────────┘  └────────┬────────┘                           │    │
-│  └───────────┼────────────────────┼────────────────────────────────────┘    │
+│  │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐      │    │
+│  │  │  /api/contact   │  │  /api/grants    │  │   /api/forum    │      │    │
+│  │  │  (SMTP send)    │  │  (SMTP send)    │  │ (Discourse proxy)│      │    │
+│  │  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘      │    │
+│  └───────────┼────────────────────┼────────────────────┼───────────────┘    │
 │              │                    │                                          │
 │  ┌───────────┼────────────────────┼────────────────────────────────────┐    │
 │  │           │       LIB LAYER    │                                     │    │
@@ -106,6 +107,7 @@ This document defines the technical architecture for the Hashrate Heatpunks comm
 │                    CLIENT COMPONENTS ('use client')              │
 │  - VideoCarousel (state: current video, expanded)               │
 │  - ContactForm (state: form fields, submission)                 │
+│  - GrantsForm (state: form fields, char counts, submission)     │
 │  - SessionCard (state: expanded/collapsed)                      │
 │  - AddToCalendar (state: dropdown open)                         │
 │  - MobileNav (state: menu open)                                 │
@@ -141,6 +143,22 @@ RootLayout
 │   │   ├── FeaturedVideo                                   │
 │   │   └── VideoCarousel (client)                          │
 │   └── ComingSoonSection                                    │
+│                                                            │
+│   Grants Page                                              │
+│   ├── HeroSection                                          │
+│   ├── WhySection                                           │
+│   ├── CategoriesSection                                    │
+│   │   └── CategoryCard[]                                  │
+│   ├── ApplicationSection                                   │
+│   │   └── GrantsForm (client)                             │
+│   │       ├── TextInput[]                                 │
+│   │       ├── TextareaWithCounter[]                       │
+│   │       ├── CategoryDropdown                            │
+│   │       └── CheckboxGroup[]                             │
+│   ├── FAQSection                                           │
+│   │   └── FAQAccordion (client)                           │
+│   ├── DonateSection                                        │
+│   └── ContactSection                                       │
 │                                                            │
 │   Summit Landing                                           │
 │   ├── HeroSection                                          │
@@ -219,6 +237,44 @@ RootLayout
                      │  Show        │
                      │  Feedback    │
                      └──────────────┘
+```
+
+### Grant Application Flow
+
+```
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│  Applicant   │────▶│  GrantsForm  │────▶│  /api/       │────▶│  /lib/       │
+│  fills form  │     │  (client)    │     │  grants      │     │  email       │
+└──────────────┘     └──────────────┘     └──────────────┘     └──────────────┘
+       │                    │                                         │
+       │                    │                                         ▼
+       │             ┌──────┴──────┐                           ┌──────────────┐
+       │             │  Validate   │                           │  Proton SMTP │
+       │             │  • Required │                           │  ────────────│
+       │             │  • Char lim │                           │   TO: grants@│
+       │             │  • Checkbox │                           │   heatpunks  │
+       │             └─────────────┘                           │   .org       │
+       │                    │                                  └──────────────┘
+       │                    │                                         │
+       │                    │◀────────────────────────────────────────┘
+       │                    │         Success/Error Response
+       │                    ▼
+       │             ┌──────────────┐
+       │             │  Show        │
+       │             │  Success     │
+       │             │  Message     │
+       │             └──────────────┘
+       │
+       └──── Real-time character counter updates (client-side)
+
+Form Fields:
+• name, email, organization, country (text)
+• category (dropdown: 5 categories + "Other")
+• project_title, project_description (3000 char limit)
+• budget (number, USD)
+• timeline, impact, background (3000 char limit each)
+• references, source (optional text)
+• 5 acknowledgement checkboxes (all required)
 ```
 
 ### Schedule Data Flow
@@ -374,7 +430,40 @@ const response = await fetch(discourseUrl, {
 
 ---
 
-### ADR-007: ICS Generation Strategy
+### ADR-007: Grant Application Form Architecture
+
+**Context:** The grants page requires a comprehensive application form with 13 fields, character limits, and multiple validation rules.
+
+**Decision:** Build a client-side form component with real-time validation, mirroring the contact form pattern with a dedicated `/api/grants` route.
+
+**Options Considered:**
+1. **Client-side form with API route** - Mirror contact form, validate client-side, send via SMTP
+2. **Multi-step wizard** - Break form into sections, save progress
+3. **External form service** - Typeform, Google Forms, etc.
+
+**Rationale:**
+- Single-page form is simpler and spec requires no save draft feature
+- Real-time character counters need client-side state
+- Consistent with existing contact form architecture
+- No external service dependencies
+
+**Implementation Details:**
+- Form state managed with useState (13 fields + 5 checkboxes)
+- Character counters for 4 textarea fields (3000 char limit each)
+- Client-side validation before submission
+- API route formats data into readable email
+- Email sent to grants@heatpunks.org via same SMTP setup
+
+**Form Validation Rules:**
+- Required fields: name, email, country, category, project_title, project_description, budget, timeline, impact, background
+- All 5 acknowledgement checkboxes must be checked
+- Character limits enforced client-side (hard limit, can't exceed)
+- Email format validation
+- Budget must be positive number
+
+---
+
+### ADR-008: ICS Generation Strategy
 
 **Context:** Add-to-calendar needs to support Google, Apple, and .ics download.
 
@@ -402,6 +491,8 @@ const response = await fetch(discourseUrl, {
 │   ├── globals.css                # Global styles + Tailwind
 │   ├── /education
 │   │   └── page.tsx               # Education page (Server)
+│   ├── /grants
+│   │   └── page.tsx               # Grants page (Server)
 │   ├── /summit
 │   │   ├── page.tsx               # Current summit (Server)
 │   │   ├── /schedule
@@ -410,7 +501,9 @@ const response = await fetch(discourseUrl, {
 │   │       └── page.tsx           # Archived summit (Server)
 │   ├── /api
 │   │   ├── /contact
-│   │   │   └── route.ts           # POST: send email
+│   │   │   └── route.ts           # POST: send contact email
+│   │   ├── /grants
+│   │   │   └── route.ts           # POST: send grant application
 │   │   └── /og
 │   │       └── route.tsx          # GET: generate OG image
 │   └── sitemap.ts                 # Auto-generated sitemap
@@ -430,6 +523,17 @@ const response = await fetch(discourseUrl, {
 │   ├── /education
 │   │   ├── BookSection.tsx        # Server
 │   │   └── VideoSection.tsx       # Server
+│   ├── /grants
+│   │   ├── HeroSection.tsx        # Server
+│   │   ├── WhySection.tsx         # Server
+│   │   ├── CategoriesSection.tsx  # Server
+│   │   ├── CategoryCard.tsx       # Server
+│   │   ├── ApplicationSection.tsx # Server
+│   │   ├── GrantsForm.tsx         # Client (form state, validation)
+│   │   ├── TextareaWithCounter.tsx# Client (char count state)
+│   │   ├── FAQSection.tsx         # Server
+│   │   ├── DonateSection.tsx      # Server
+│   │   └── ContactSection.tsx     # Server
 │   ├── /summit
 │   │   ├── SummitHero.tsx         # Server
 │   │   ├── AboutSection.tsx       # Server
@@ -462,6 +566,7 @@ const response = await fetch(discourseUrl, {
 │   ├── schedule.yaml              # Summit schedule
 │   ├── sponsors.yaml              # Sponsor data
 │   ├── videos.ts                  # Hardcoded video data
+│   ├── grants.ts                  # Grant categories & FAQ data
 │   ├── navigation.ts              # Nav links config
 │   └── site.ts                    # Site metadata
 │
@@ -483,6 +588,7 @@ const response = await fetch(discourseUrl, {
 ├── /types
 │   ├── schedule.ts                # Schedule type definitions
 │   ├── discourse.ts               # Forum API types
+│   ├── grants.ts                  # Grant application types
 │   └── index.ts                   # Re-exports
 │
 ├── .env.example                   # Environment template
@@ -522,14 +628,34 @@ const response = await fetch(discourseUrl, {
 3. Implement VideoCarousel component
 4. Add Coming Soon placeholder
 
-### Phase 4: Summit Pages
+### Phase 4: Grants Page
+1. Create grants page structure with all sections
+2. Build Hero section with "Build with us" messaging
+3. Create Why section explaining industry challenges
+4. Build Categories grid with 5 category cards
+5. Implement GrantsForm component:
+   - Form state management (13 fields + 5 checkboxes)
+   - TextareaWithCounter component for char limits
+   - Client-side validation
+   - Category dropdown
+   - Checkbox group for acknowledgements
+6. Create `/api/grants` route:
+   - Validate submission
+   - Format data into readable email
+   - Send to grants@heatpunks.org via SMTP
+7. Add FAQ section (reuse FAQAccordion component)
+8. Build Donate CTA section (link to 256foundation.org)
+9. Add Contact section with grants@heatpunks.org
+10. Update navigation to include Grants link
+
+### Phase 5: Summit Pages
 1. Build Summit landing page structure
 2. Implement all sections (Hero, About, Topics, etc.)
 3. Create SponsorGrid component
 4. Add OpenStreetMap embed
 5. Build FAQ accordion
 
-### Phase 5: Schedule System
+### Phase 6: Schedule System
 1. Define YAML schema and types
 2. Create YAML parsing utilities
 3. Build ScheduleDay component
@@ -537,14 +663,14 @@ const response = await fetch(discourseUrl, {
 5. Add parallel session column layout
 6. Implement AddToCalendar functionality
 
-### Phase 6: SEO & Polish
+### Phase 7: SEO & Polish
 1. Add meta tags to all pages
 2. Implement OG image generation
 3. Create sitemap.ts
 4. Add Umami analytics script
 5. Accessibility audit and fixes
 
-### Phase 7: Deployment
+### Phase 8: Deployment
 1. Finalize Dockerfile
 2. Test Docker build locally
 3. Configure DNS redirects
@@ -604,6 +730,64 @@ export interface ScheduleData {
   summit: Summit;
   days: ScheduleDay[];
 }
+```
+
+### Grant Application Types
+
+```typescript
+// /types/grants.ts
+
+export type GrantCategory =
+  | 'technical-standards'
+  | 'academic-research'
+  | 'regulatory-advocacy'
+  | 'case-studies'
+  | 'educational-content'
+  | 'other';
+
+export interface GrantApplication {
+  // Contact Info
+  name: string;
+  email: string;
+  organization?: string;       // Optional
+  country: string;
+
+  // Project Details
+  category: GrantCategory;
+  projectTitle: string;
+  projectDescription: string;  // 3000 char limit
+  budget: number;              // USD amount
+  timeline: string;            // 3000 char limit
+
+  // Impact & Background
+  impact: string;              // 3000 char limit
+  background: string;          // 3000 char limit
+
+  // Optional
+  references?: string;
+  source?: string;             // How did you hear about us
+
+  // Acknowledgements (all must be true)
+  ackBitcoin: boolean;
+  ackOpenLicense: boolean;
+  ackPublicShare: boolean;
+  ackNoGuarantee: boolean;
+  ackContact: boolean;
+}
+
+export interface GrantCategory {
+  id: GrantCategory;
+  name: string;
+  description: string;
+}
+
+export interface GrantFAQ {
+  question: string;
+  answer: string;
+}
+
+// Character limit constant
+export const GRANT_CHAR_LIMIT = 3000;
 ```
 
 ### Discourse Types
@@ -674,6 +858,10 @@ SMTP_PORT=587
 SMTP_SECURE=false
 SMTP_USER=admin@heatpunks.org
 SMTP_PASS=
+
+# Email recipients
+CONTACT_EMAIL=admin@heatpunks.org
+GRANTS_EMAIL=grants@heatpunks.org
 
 # ─────────────────────────────────────
 # Umami Analytics
@@ -767,7 +955,9 @@ services:
 | Risk | Likelihood | Impact | Mitigation |
 |------|------------|--------|------------|
 | Discourse API changes | Low | Medium | Abstract API calls in `/lib/discourse.ts`, easy to update |
-| Proton SMTP rate limits | Low | Medium | Contact form has no spam protection; add honeypot if issues arise |
+| Proton SMTP rate limits | Low | Medium | Contact/grants forms have no spam protection; add honeypot if issues arise |
+| Grant application spam | Medium | Medium | No spam protection per spec; can add honeypot field if abuse occurs |
+| Large grant email formatting | Low | Low | Email template tested with max char limits; plain text fallback |
 | YAML parse errors | Medium | High | Validate YAML at build time, fail fast with clear error messages |
 | Large schedule data | Low | Low | YAML is read once at build time, cached in static pages |
 | OG image generation fails | Low | Low | Fallback to static default OG image |
@@ -800,10 +990,12 @@ services:
 
 ### Input Validation
 - Contact form: validate email format, sanitize message content
+- Grants form: validate all required fields, enforce character limits, validate email format
 - No user-generated content displayed (XSS not a concern for forum titles)
 
 ### API Routes
 - `/api/contact`: Rate limiting recommended if spam becomes an issue
+- `/api/grants`: Same SMTP infrastructure; validate all fields server-side before sending
 - No authentication required (no user accounts)
 
 ### Environment Variables

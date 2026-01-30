@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { BookSection } from '@/components/education/BookSection';
 import { VideoSection } from '@/components/education/VideoSection';
 
@@ -32,21 +33,29 @@ export default function EducationPage() {
       <BookSection />
       <VideoSection />
 
-      {/* Coming Soon Section */}
+      {/* More Resources Section */}
       <section className="py-16 md:py-24 bg-[var(--background-alt)] border-t border-[var(--card-border)]">
-        <div className="section-container text-center">
-          <div className="max-w-2xl mx-auto">
-            <div className="text-4xl text-[var(--terminal-color)] mb-4 font-mono">⏳</div>
-            <span className="section-tag">[COMING SOON]</span>
+        <div className="section-container">
+          <div className="mb-8">
+            <span className="section-tag">[003]</span>
             <h2 className="font-mono text-2xl md:text-3xl font-bold tracking-wide mt-2 mb-4">
-              MORE RESOURCES IN DEVELOPMENT
+              MORE RESOURCES IN <span className="text-[var(--accent)]">DEVELOPMENT</span>
             </h2>
-            <p className="text-[var(--muted)] text-sm leading-relaxed">
-              We&apos;re working on curated tutorials, technical guides, and in-depth
-              articles to help you master hashrate heating. Join our community to
-              be notified when new content is available.
+            <p className="text-[var(--muted)] text-sm leading-relaxed max-w-2xl mb-6">
+              We&apos;re building the educational foundation for the hashrate heating industry.
+              Tutorials, technical guides, installation documentation, safety standards —
+              this content doesn&apos;t exist yet because we&apos;re the ones creating it.
+            </p>
+            <p className="text-[var(--muted)] text-sm leading-relaxed max-w-2xl">
+              Want to help build this industry? The 256 Foundation funds educational content,
+              documentation, and training materials through our grants program.
             </p>
           </div>
+
+          <Link href="/grants" className="btn-primary group">
+            <span className="relative z-10">APPLY FOR A GRANT</span>
+            <span className="btn-heat" />
+          </Link>
         </div>
       </section>
     </div>

@@ -198,6 +198,7 @@ a:hover .btn-heat {
 
 /* Flame bar animation */
 .flame-bar {
+  mt: 12px;
   height: 4px;
   background: linear-gradient(90deg, var(--red), var(--accent), var(--accent-light), var(--accent), var(--red));
   background-size: 200% 100%;

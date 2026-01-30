@@ -1,6 +1,7 @@
 import { HeroSection } from '@/components/landing/HeroSection';
 import { ForumFeed } from '@/components/landing/ForumFeed';
 import { LinksSection } from '@/components/landing/LinksSection';
+import { GrantsSection } from '@/components/landing/GrantsSection';
 import { ContactSection } from '@/components/landing/ContactSection';
 
 export default function HomePage() {
@@ -9,6 +10,7 @@ export default function HomePage() {
       <HeroSection />
       <ForumFeed />
       <LinksSection />
+      <GrantsSection />
       <ContactSection />
     </div>
   );

@@ -31,7 +31,7 @@ export function SummitHero({ summit }: SummitHeroProps) {
 
           {/* Tagline */}
           <p className="font-mono text-xs tracking-[0.2em] text-[var(--terminal-color)] mt-6">
-            // UNDERMINING THE STATUS QUO
+            {'// UNDERMINING THE STATUS QUO'}
           </p>
 
           {/* Meta info */}

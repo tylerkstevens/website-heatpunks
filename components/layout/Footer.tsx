@@ -15,10 +15,10 @@ export function Footer() {
       </div>
 
       {/* Flame bar */}
-      <div className="flame-bar" />
+      <div className="flame-bar mb-8" />
 
       {/* Main footer content */}
-      <div className="section-container py-12">
+      <div className="section-container pt-16 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About / Attribution */}
           <div>
@@ -91,12 +91,26 @@ export function Footer() {
             <h3 className="font-mono text-xs tracking-wider text-[var(--terminal-color)] mb-4">&gt; CONNECT</h3>
             <nav className="flex flex-col gap-2">
               <a
+                href={`mailto:${siteConfig.contact.email}`}
+                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                {siteConfig.contact.email.toUpperCase()}
+              </a>
+              <a
+                href={siteConfig.links.forum}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                COMMUNITY FORUM
+              </a>
+              <a
                 href={siteConfig.links.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
               >
-                TELEGRAM
+                TELEGRAM GROUP
               </a>
               <a
                 href={siteConfig.links.twitter}
@@ -106,26 +120,14 @@ export function Footer() {
               >
                 X / TWITTER
               </a>
-              <a
-                href={siteConfig.links.forum}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
-              >
-                FORUM
-              </a>
-              <a
-                href={`mailto:${siteConfig.contact.email}`}
-                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
-              >
-                {siteConfig.contact.email.toUpperCase()}
-              </a>
+
+
             </nav>
           </div>
         </div>
 
         {/* Copyright */}
-        <div className="mt-12 pt-8 border-t border-[var(--card-border)]">
+        <div className="mt-12 mb-8 pt-8 border-t border-[var(--card-border)]">
           <p className="font-mono text-[10px] text-[var(--muted)] text-center tracking-wider">
             &copy; {currentYear} HASHRATE HEATPUNKS — A PROJECT OF THE{' '}
             <a
