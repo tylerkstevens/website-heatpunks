@@ -16,7 +16,7 @@ export function DonateSection() {
           </p>
         </div>
         <a
-          href={siteConfig.foundation.url}
+          href={siteConfig.foundation.donate}
           target="_blank"
           rel="noopener noreferrer"
           className="btn-outline inline-flex"

@@ -23,10 +23,16 @@ export default function EducationPage() {
             <span className="text-flame-gradient">LEARN</span>{' '}
             <span className="text-[var(--foreground)]">HASHRATE HEATING</span>
           </h1>
-          <p className="text-[var(--muted)] max-w-2xl mx-auto leading-relaxed">
+          <p className="text-[var(--muted)] max-w-2xl mx-auto leading-relaxed mb-6">
             Explore our curated resources to understand how Bitcoin mining can be
             transformed into a valuable heat source for homes and businesses.
           </p>
+          <Link
+            href="/mission"
+            className="font-mono text-xs text-[var(--terminal-color)] hover:text-[var(--accent)] transition-colors"
+          >
+            &gt; LEARN MORE ABOUT OUR MISSION
+          </Link>
         </div>
       </section>
 

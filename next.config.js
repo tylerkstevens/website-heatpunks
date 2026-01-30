@@ -9,6 +9,10 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'heatpunks.org',
+      },
+      {
+        protocol: 'https',
         hostname: 'img.youtube.com',
       },
     ],

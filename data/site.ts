@@ -21,6 +21,7 @@ export const siteConfig = {
     mission: 'dismantling the proprietary mining empire',
     url: 'https://256foundation.org',
     github: 'https://github.com/256foundation',
+    donate: 'https://pay.zaprite.com/pl_TFoKMotEqk',
   },
 };
 
@@ -28,11 +29,13 @@ export interface NavItem {
   name: string;
   href: string;
   external?: boolean;
+  variant?: 'default' | 'outline';
   children?: NavItem[];
 }
 
 export const navigation: NavItem[] = [
   { name: 'Home', href: '/' },
+  { name: 'Mission', href: '/mission' },
   { name: 'Education', href: '/education' },
   { name: 'Grants', href: '/grants' },
   {
@@ -45,4 +48,5 @@ export const navigation: NavItem[] = [
   },
   { name: 'Forum', href: 'https://forum.heatpunks.org', external: true },
   { name: 'Group Chat', href: 'https://t.me/heatpunks', external: true },
+  { name: 'Donate', href: 'https://pay.zaprite.com/pl_TFoKMotEqk', external: true, variant: 'outline' },
 ];

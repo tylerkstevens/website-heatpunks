@@ -22,7 +22,7 @@ export function Header() {
               priority
             />
             <span className="hidden sm:block font-mono text-sm font-bold tracking-wide text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors">
-              HEATPUNKS
+              HASHRATE HEATPUNKS
             </span>
           </Link>
 
@@ -47,15 +47,20 @@ function NavItemComponent({ item }: { item: NavItem }) {
 
   if (!item.children) {
     if (item.external) {
+      const isOutline = item.variant === 'outline';
       return (
         <a
           href={item.href}
           target="_blank"
           rel="noopener noreferrer"
-          className={`${baseClasses} inline-flex items-center gap-1`}
+          className={`font-mono text-xs tracking-wider px-3 py-1.5 inline-flex items-center gap-1 transition-colors ${
+            isOutline
+              ? 'border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--accent-contrast)]'
+              : 'bg-[var(--accent)] text-[var(--accent-contrast)] hover:bg-[var(--accent-light)]'
+          }`}
         >
           {item.name.toUpperCase()}
-          <span className="text-[var(--terminal-color)] text-[10px]">↗</span>
+          <span className="text-[10px]">↗</span>
         </a>
       );
     }

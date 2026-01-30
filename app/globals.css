@@ -446,6 +446,20 @@ input:focus, textarea:focus, select:focus {
 }
 
 /* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+/* Hide scrollbar for carousel/horizontal scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
+
+/* ========================================
    UTILITY ANIMATIONS
    ======================================== */
 

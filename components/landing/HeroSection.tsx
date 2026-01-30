@@ -75,6 +75,10 @@ export function HeroSection() {
           <Link href="/education" className="btn-secondary">
             LEARN
           </Link>
+
+          <Link href="/mission" className="btn-secondary">
+            OUR MISSION
+          </Link>
         </div>
 
       </div>

@@ -66,22 +66,28 @@ export function Footer() {
                 HOME
               </Link>
               <Link
+                href="/mission"
+                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                MISSION
+              </Link>
+              <Link
                 href="/education"
                 className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
               >
                 EDUCATION
               </Link>
               <Link
+                href="/grants"
+                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                GRANTS
+              </Link>
+              <Link
                 href="/summit"
                 className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
               >
                 SUMMIT
-              </Link>
-              <Link
-                href="/summit/schedule"
-                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
-              >
-                SCHEDULE
               </Link>
             </nav>
           </div>

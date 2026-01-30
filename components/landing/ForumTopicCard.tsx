@@ -22,11 +22,11 @@ export function ForumTopicCard({ topic }: ForumTopicCardProps) {
         </p>
       )}
 
-      <div className="flex items-center justify-between text-[10px] font-mono">
-        <span className="heatpunk-tag">
+      <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
+        <span className="heatpunk-tag truncate max-w-[70%]">
           {topic.category.toUpperCase()}
         </span>
-        <span className="text-[var(--muted)]">{topic.timeAgo}</span>
+        <span className="text-[var(--muted)] whitespace-nowrap flex-shrink-0">{topic.timeAgo}</span>
       </div>
     </a>
   );
