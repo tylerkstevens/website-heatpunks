@@ -1,11 +1,13 @@
-import type { Summit } from '@/types/schedule';
+import Image from 'next/image';
+import type { Summit, Sponsor } from '@/types/schedule';
 import { siteConfig } from '@/data/site';
 
 interface SummitHeroProps {
   summit: Summit;
+  sponsors?: Sponsor[];
 }
 
-export function SummitHero({ summit }: SummitHeroProps) {
+export function SummitHero({ summit, sponsors }: SummitHeroProps) {
   return (
     <>
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -68,7 +70,56 @@ export function SummitHero({ summit }: SummitHeroProps) {
             >
               WATCH 2025 RECAP
             </a>
+
+            <a
+              href="/summit/schedule"
+              className="btn-secondary"
+            >
+              SUMMIT SCHEDULE
+            </a>
           </div>
+
+          {/* Featured Sponsors */}
+          {sponsors && sponsors.length > 0 && (
+            <div className="mt-12">
+              <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--muted)] mb-4">
+                SPONSORED BY
+              </p>
+              <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10">
+                {sponsors.map((sponsor) => (
+                  <a
+                    key={sponsor.name}
+                    href={sponsor.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative h-8 w-24 md:h-10 md:w-32 opacity-70 hover:opacity-100 transition-opacity"
+                    title={sponsor.name}
+                  >
+                    {/* Light logo (for dark mode) */}
+                    <Image
+                      src={sponsor.logo}
+                      alt={sponsor.name}
+                      fill
+                      className={`object-contain ${
+                        sponsor.logoDark ? 'hidden dark:block' : ''
+                      }`}
+                      sizes="128px"
+                    />
+                    {/* Dark logo (for light mode) */}
+                    {sponsor.logoDark && (
+                      <Image
+                        src={sponsor.logoDark}
+                        alt={sponsor.name}
+                        fill
+                        className="object-contain dark:hidden"
+                        sizes="128px"
+                      />
+                    )}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Scroll indicator */}

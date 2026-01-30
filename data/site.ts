@@ -1,3 +1,8 @@
+// Single source of truth for external URLs
+const DONATE_URL = 'https://pay.zaprite.com/pl_TFoKMotEqk';
+const FORUM_URL = 'https://forum.heatpunks.org';
+const TELEGRAM_URL = 'https://t.me/heatpunks';
+
 export const siteConfig = {
   name: 'Hashrate Heatpunks',
   tagline: 'A community working on the emerging hashrate heating industry - Marrying the bitcoin mining and heating sectors to bring hashrate back to homes and businesses',
@@ -5,9 +10,9 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://heatpunks.org',
 
   links: {
-    telegram: 'https://t.me/heatpunks',
+    telegram: TELEGRAM_URL,
     twitter: 'https://x.com/HashHeatpunks',
-    forum: 'https://forum.heatpunks.org',
+    forum: FORUM_URL,
     foundation: 'https://256foundation.org',
     foundationGithub: 'https://github.com/256foundation',
   },
@@ -21,7 +26,7 @@ export const siteConfig = {
     mission: 'dismantling the proprietary mining empire',
     url: 'https://256foundation.org',
     github: 'https://github.com/256foundation',
-    donate: 'https://pay.zaprite.com/pl_TFoKMotEqk',
+    donate: DONATE_URL,
   },
 };
 
@@ -46,7 +51,7 @@ export const navigation: NavItem[] = [
       { name: 'Schedule', href: '/summit/schedule' },
     ]
   },
-  { name: 'Forum', href: 'https://forum.heatpunks.org', external: true },
-  { name: 'Group Chat', href: 'https://t.me/heatpunks', external: true },
-  { name: 'Donate', href: 'https://pay.zaprite.com/pl_TFoKMotEqk', external: true, variant: 'outline' },
+  { name: 'Forum', href: FORUM_URL, external: true },
+  { name: 'Group Chat', href: TELEGRAM_URL, external: true },
+  { name: 'Donate', href: DONATE_URL, external: true, variant: 'outline' },
 ];

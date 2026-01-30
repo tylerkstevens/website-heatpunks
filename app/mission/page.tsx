@@ -67,16 +67,15 @@ export default function MissionPage() {
         <div className="relative z-10 section-container text-center">
           <span className="section-tag">[MISSION]</span>
           <h1 className="font-mono text-[clamp(2rem,8vw,4rem)] font-extrabold tracking-tight mb-6">
-            <span className="text-flame-gradient">WHY</span>{' '}
-            <span className="text-[var(--foreground)]">WE EXIST</span>
+            <span className="text-flame-gradient">OUR</span>{' '}
+            <span className="text-[var(--foreground)]">MISSION</span>
           </h1>
           <p className="text-[var(--foreground)] text-lg md:text-xl max-w-3xl mx-auto leading-relaxed font-medium mb-4">
-            &ldquo;To accelerate the adoption of hashrate heating by building the standards,
-            education, and community infrastructure the industry needs to thrive.&rdquo;
+            &ldquo;Marry the bitcoin mining and heating sectors to accelerate the adoption of hashrate heating by building the standards,
+            education, and community infrastructure needed to bring mining back to homes and businesses.&rdquo;
           </p>
           <p className="text-[var(--muted)] max-w-2xl mx-auto leading-relaxed">
-            <span className="text-[var(--terminal-color)]">VISION:</span> A world where every home and business
-            can heat with hashrate — where Bitcoin mining is distributed, decentralized, and productive.
+            <span className="text-[var(--terminal-color)]">VISION:</span> A world where bitcoin mining is synonymous with electric heating. Where hashrate is decentralized back into homes and businesses - offsetting heating costs and securing the network.
           </p>
         </div>
       </section>
@@ -94,7 +93,7 @@ export default function MissionPage() {
           <div className="max-w-3xl">
             <p className="text-[var(--foreground)] text-lg leading-relaxed mb-6">
               We are <strong className="text-[var(--accent)]">Hashrate Heatpunks</strong> — a community
-              of bitcoiners, HVAC professionals, engineers, builders, and advocates united by a radical idea:
+              of bitcoiners, tradesmen, engineers, builders, and advocates united by a radical idea:
             </p>
             <p className="font-mono text-xl md:text-2xl text-[var(--terminal-color)] mb-6">
               Bitcoin mining heat is a product, not a problem.
@@ -102,7 +101,7 @@ export default function MissionPage() {
             <p className="text-[var(--muted)] leading-relaxed">
               We reject the notion that mining must happen in remote warehouses, controlled by industrial
               operators. We believe hashrate belongs at home — in water heaters, space heaters, pools,
-              greenhouses, and industrial processes.
+              greenhouses, industrial processes and more.
             </p>
           </div>
         </div>

@@ -52,6 +52,7 @@ export interface ScheduleData {
 export interface Sponsor {
   name: string;
   logo: string;
+  logoDark?: string; // Dark version for light mode
   url: string;
 }
 

@@ -1,11 +1,13 @@
-import { getLatestTopics } from '@/lib/discourse';
 import { ForumTopicCard } from './ForumTopicCard';
 import { siteConfig } from '@/data/site';
+import type { ForumTopic } from '@/types/discourse';
 
-export async function ForumFeed() {
-  const topics = await getLatestTopics(8);
+interface ForumFeedProps {
+  topics?: ForumTopic[] | null;
+}
 
-  // Hide section if API fails
+export function ForumFeed({ topics }: ForumFeedProps) {
+  // Hide section if no topics
   if (!topics || topics.length === 0) {
     return null;
   }

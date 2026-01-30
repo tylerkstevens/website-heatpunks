@@ -2,8 +2,25 @@ import type { DiscourseLatestResponse, DiscourseCategoriesResponse, ForumTopic, 
 
 const DISCOURSE_URL = process.env.DISCOURSE_URL || 'https://forum.heatpunks.org';
 
-function getTimeAgo(dateString: string): string {
+// Helper to build topic URL
+const getTopicUrl = (slug: string, id: number) => `${DISCOURSE_URL}/t/${slug}/${id}`;
+
+// Helper to build Discourse API headers
+function getDiscourseHeaders(): HeadersInit {
+  const headers: HeadersInit = { 'Accept': 'application/json' };
+  if (process.env.DISCOURSE_API_KEY && process.env.DISCOURSE_API_USERNAME) {
+    headers['Api-Key'] = process.env.DISCOURSE_API_KEY;
+    headers['Api-Username'] = process.env.DISCOURSE_API_USERNAME;
+  }
+  return headers;
+}
+
+export function getTimeAgo(dateString: string): string {
   const date = new Date(dateString);
+  // Handle invalid dates
+  if (isNaN(date.getTime())) {
+    return 'unknown';
+  }
   const now = new Date();
   const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
@@ -26,19 +43,17 @@ function getTimeAgo(dateString: string): string {
   return 'just now';
 }
 
-export async function getLatestTopics(limit = 10): Promise<ForumTopic[] | null> {
+// Unified data fetching - fetches topics and categories once, returns both topics and images
+export interface DiscourseData {
+  topics: ForumTopic[];
+  images: ForumImage[];
+}
+
+export async function getDiscourseData(topicsLimit = 10, imagesLimit = 12): Promise<DiscourseData | null> {
   try {
-    const headers: HeadersInit = {
-      'Accept': 'application/json',
-    };
+    const headers = getDiscourseHeaders();
 
-    // Add API key if configured
-    if (process.env.DISCOURSE_API_KEY && process.env.DISCOURSE_API_USERNAME) {
-      headers['Api-Key'] = process.env.DISCOURSE_API_KEY;
-      headers['Api-Username'] = process.env.DISCOURSE_API_USERNAME;
-    }
-
-    // Fetch topics and categories in parallel
+    // Fetch topics and categories in parallel (single API call for topics)
     const [topicsResponse, categoriesResponse] = await Promise.all([
       fetch(`${DISCOURSE_URL}/latest.json`, {
         headers,
@@ -61,70 +76,50 @@ export async function getLatestTopics(limit = 10): Promise<ForumTopic[] | null> 
     let categoryMap: Record<number, string> = {};
     if (categoriesResponse.ok) {
       const categoriesData: DiscourseCategoriesResponse = await categoriesResponse.json();
-      categoryMap = categoriesData.category_list.categories.reduce(
-        (acc, cat) => ({ ...acc, [cat.id]: cat.name }),
-        {} as Record<number, string>
+      categoryMap = Object.fromEntries(
+        categoriesData.category_list.categories.map(cat => [cat.id, cat.name])
       );
     }
 
-    // Transform Discourse topics to our format
+    // Transform to topics format
     const topics: ForumTopic[] = data.topic_list.topics
-      .slice(0, limit)
+      .slice(0, topicsLimit)
       .map((topic) => ({
         id: topic.id,
         title: topic.fancy_title || topic.title,
         excerpt: topic.excerpt || '',
         category: categoryMap[topic.category_id] || 'General',
-        url: `${DISCOURSE_URL}/t/${topic.slug}/${topic.id}`,
+        url: getTopicUrl(topic.slug, topic.id),
         timeAgo: getTimeAgo(topic.last_posted_at || topic.created_at),
       }));
 
-    return topics;
-  } catch (error) {
-    console.error('Failed to fetch Discourse topics:', error);
-    return null;
-  }
-}
-
-export async function getTopicsWithImages(limit = 12): Promise<ForumImage[] | null> {
-  try {
-    const headers: HeadersInit = {
-      'Accept': 'application/json',
-    };
-
-    if (process.env.DISCOURSE_API_KEY && process.env.DISCOURSE_API_USERNAME) {
-      headers['Api-Key'] = process.env.DISCOURSE_API_KEY;
-      headers['Api-Username'] = process.env.DISCOURSE_API_USERNAME;
-    }
-
-    const response = await fetch(`${DISCOURSE_URL}/latest.json`, {
-      headers,
-      next: { revalidate: 600 }, // Cache for 10 minutes
-    });
-
-    if (!response.ok) {
-      console.error(`Discourse API error: ${response.status}`);
-      return null;
-    }
-
-    const data: DiscourseLatestResponse = await response.json();
-
-    // Filter topics that have images and transform to our format
+    // Transform to images format (filter topics with images)
     const images: ForumImage[] = data.topic_list.topics
       .filter((topic) => topic.image_url)
-      .slice(0, limit)
+      .slice(0, imagesLimit)
       .map((topic) => ({
         id: topic.id,
         url: topic.image_url!.startsWith('http')
           ? topic.image_url!
           : `${DISCOURSE_URL}${topic.image_url}`,
         topicTitle: topic.fancy_title || topic.title,
-        topicUrl: `${DISCOURSE_URL}/t/${topic.slug}/${topic.id}`,
+        topicUrl: getTopicUrl(topic.slug, topic.id),
       }));
 
-    return images;
+    return { topics, images };
   } catch (error) {
-    console.error('Failed to fetch Discourse images:', error);
+    console.error('Failed to fetch Discourse data:', error);
     return null;
   }
+}
+
+// Legacy functions for backward compatibility and independent usage
+export async function getLatestTopics(limit = 10): Promise<ForumTopic[] | null> {
+  const data = await getDiscourseData(limit, 0);
+  return data?.topics ?? null;
+}
+
+export async function getTopicsWithImages(limit = 12): Promise<ForumImage[] | null> {
+  const data = await getDiscourseData(0, limit);
+  return data?.images ?? null;
 }

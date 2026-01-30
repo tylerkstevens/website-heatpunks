@@ -26,7 +26,7 @@ export default function SummitPage() {
   return (
     <div className="bg-[var(--black)]">
       {/* Hero with stats bar */}
-      <SummitHero summit={scheduleData.summit} />
+      <SummitHero summit={scheduleData.summit} sponsors={sponsors} />
 
       {/* [001] About */}
       <AboutSection />

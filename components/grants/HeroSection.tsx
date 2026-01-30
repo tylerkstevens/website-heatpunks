@@ -14,8 +14,8 @@ export function HeroSection() {
           <span className="text-[var(--foreground)]">THE INDUSTRY</span>
         </h1>
         <p className="text-[var(--muted)] max-w-2xl mx-auto leading-relaxed mb-8">
-          The 256 Foundation funds projects advancing hashrate heating adoption globally.
-          Technical standards, research, advocacy, documentation, education - if it moves
+          The 256 Foundation funds Hashrate Heatpunk community projects advancing hashrate heating adoption globally.
+          Technical standards, research, advocacy, documentation, education - if it decentralizes mining & moves
           the industry forward, we want to hear about it.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
@@ -32,7 +32,7 @@ export function HeroSection() {
             rel="noopener noreferrer"
             className="btn-outline"
           >
-            DONATE TO THE 256 FOUNDATION
+            DONATE VIA THE 256 FOUNDATION
           </a>
         </div>
       </div>

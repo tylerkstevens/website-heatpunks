@@ -33,6 +33,7 @@ export function VideoCarousel({ videos }: VideoCarouselProps) {
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${expandedVideo.youtubeId}?autoplay=1`}
             title={expandedVideo.title}
+            loading="lazy"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             className="absolute inset-0 w-full h-full"
@@ -72,6 +73,7 @@ export function VideoCarousel({ videos }: VideoCarouselProps) {
                 src={`https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg`}
                 alt={video.title}
                 fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
               />
 

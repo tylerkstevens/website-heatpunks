@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { Sponsor } from '@/types/schedule';
 
 interface SponsorGridProps {
@@ -10,32 +11,58 @@ export function SponsorGrid({ sponsors }: SponsorGridProps) {
       <div className="section-container">
         {/* Section header */}
         <div className="text-center mb-12">
-          <h3 className="font-mono text-xs tracking-[0.2em] text-[var(--muted)] mb-8">
-            SUMMIT SPONSORS
+          <span className="section-tag">[SPONSORS]</span>
+          <h3 className="font-mono text-2xl md:text-3xl font-bold tracking-wide mt-2 mb-4">
+            SUMMIT <span className="text-[var(--accent)]">SPONSORS</span>
           </h3>
           <p className="text-[var(--muted)] text-sm">
             Thank you to our sponsors for making this event possible.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
           {sponsors.map((sponsor) => (
             <a
               key={sponsor.name}
               href={sponsor.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="heatpunk-card flex items-center justify-center p-6 min-h-[100px] group"
+              className="heatpunk-card flex items-center justify-center p-6 min-h-[120px] group"
             >
-              <span className="font-mono text-xs tracking-wider text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors text-center">
-                {sponsor.name}
-              </span>
+              {sponsor.logo ? (
+                <div className="relative w-full h-12">
+                  {/* Light logo (for dark mode) */}
+                  <Image
+                    src={sponsor.logo}
+                    alt={sponsor.name}
+                    fill
+                    className={`object-contain opacity-80 group-hover:opacity-100 transition-opacity ${
+                      sponsor.logoDark ? 'hidden dark:block' : ''
+                    }`}
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                  />
+                  {/* Dark logo (for light mode) */}
+                  {sponsor.logoDark && (
+                    <Image
+                      src={sponsor.logoDark}
+                      alt={sponsor.name}
+                      fill
+                      className="object-contain opacity-80 group-hover:opacity-100 transition-opacity dark:hidden"
+                      sizes="(max-width: 768px) 50vw, 33vw"
+                    />
+                  )}
+                </div>
+              ) : (
+                <span className="font-mono text-xs tracking-wider text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors text-center">
+                  {sponsor.name}
+                </span>
+              )}
             </a>
           ))}
         </div>
 
         {/* Become a sponsor CTA */}
-        <div className="mt-12 pt-8 border-t border-[var(--card-border)]">
+        <div className="mt-12 pt-8 border-t border-[var(--card-border)] text-center">
           <p className="font-mono text-xs text-[var(--muted)]">
             <span className="text-[var(--terminal-color)]">&gt;</span> Interested in sponsoring?{' '}
             <a

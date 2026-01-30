@@ -21,7 +21,7 @@ export function DonateSection() {
           rel="noopener noreferrer"
           className="btn-outline inline-flex"
         >
-          DONATE TO 256 FOUNDATION
+          DONATE VIA THE 256 FOUNDATION
         </a>
       </div>
     </section>

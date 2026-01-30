@@ -32,7 +32,7 @@ export function HeroSection() {
         <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-10 font-mono text-xs text-[var(--muted)]">
           <span>
             <span className="text-[var(--accent)]">STATUS:</span>{' '}
-            <span className="animate-blink">BUILDING THE INDUSTRY</span>
+            <span className="animate-blink">DEFINING THE INDUSTRY</span>
           </span>
           <span className="text-[var(--card-border)] hidden md:inline">|</span>
           <span>

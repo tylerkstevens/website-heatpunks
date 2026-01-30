@@ -213,7 +213,7 @@ A page for grant proposals and information about the Heatpunks/256 Foundation gr
    | What's the review process? | We review applications on a rolling basis. There are no deadlines. If we're interested, we'll reach out to learn more. |
    | Can I apply multiple times? | Yes. There's no limit on the number of proposals you can submit. |
    | What if my proposal is rejected? | You can reapply immediately with a revised or new proposal. |
-   | What about intellectual property? | Work funded by these grants must be released under an open/permissive license to benefit the broader community. |
+   | What about intellectual property? | Work funded by these grants must be released under an open/permissive license to benefit the broader community - a necessity to kickstart the industry. |
 
 6. **Support/Donate CTA Section**
    - For people who want to fund the grants program rather than apply

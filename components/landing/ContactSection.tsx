@@ -11,7 +11,7 @@ export function ContactSection() {
             GET IN TOUCH
           </h2>
           <p className="text-[var(--muted)] mt-2 text-sm">
-            Have questions about hashrate heating? Want to get involved?
+            Have questions about the Hashrate Heatpunks? Want to get involved?
             Send us a message.
           </p>
         </div>

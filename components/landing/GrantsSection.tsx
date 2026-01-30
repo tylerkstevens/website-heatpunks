@@ -18,7 +18,7 @@ export function GrantsSection() {
             FUND THE <span className="text-[var(--accent)]">FUTURE</span>
           </h2>
           <p className="text-[var(--muted)] mt-2 text-sm max-w-2xl">
-            The 256 Foundation funds foundational work accelerating hashrate heating adoption.
+            The 256 Foundation funds foundational work accelerating open-source mining and hashrate heating.
             No safety standards? No building codes? We&apos;re funding the solutions.
           </p>
         </div>

@@ -1,10 +1,12 @@
 import Image from 'next/image';
-import { getTopicsWithImages } from '@/lib/discourse';
 import { siteConfig } from '@/data/site';
+import type { ForumImage } from '@/types/discourse';
 
-export async function CommunityGallery() {
-  const images = await getTopicsWithImages(12);
+interface CommunityGalleryProps {
+  images?: ForumImage[] | null;
+}
 
+export function CommunityGallery({ images }: CommunityGalleryProps) {
   // Hide section if no images available
   if (!images || images.length === 0) {
     return null;
@@ -76,7 +78,7 @@ export async function CommunityGallery() {
           className="inline-flex items-center gap-2 font-mono text-xs tracking-wider text-[var(--accent)] hover:text-[var(--accent-light)] transition-colors"
         >
           <span>&gt;</span>
-          EXPLORE THE FORUM
+          SEE BUILDS ON THE FORUM
           <span>→</span>
         </a>
       </div>
