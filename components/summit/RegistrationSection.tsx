@@ -1,6 +1,12 @@
+'use client';
+
+import { useState } from 'react';
 import { siteConfig } from '@/data/site';
+import { InvitationModal } from './InvitationModal';
 
 export function RegistrationSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section className="relative py-16 md:py-24 bg-gradient-to-b from-[var(--card-background)] to-[var(--background)]">
       {/* Top accent line */}
@@ -49,13 +55,13 @@ export function RegistrationSection() {
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a
-            href={`mailto:${siteConfig.contact.email}?subject=Summit 2026 Waitlist`}
+          <button
+            onClick={() => setIsModalOpen(true)}
             className="btn-primary"
           >
             <span className="relative z-10">REQUEST INVITATION</span>
             <span className="btn-heat" />
-          </a>
+          </button>
 
           <a
             href={`mailto:${siteConfig.contact.email}?subject=Summit 2026 Sponsorship`}
@@ -65,6 +71,12 @@ export function RegistrationSection() {
           </a>
         </div>
       </div>
+
+      <InvitationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        year={2026}
+      />
     </section>
   );
 }

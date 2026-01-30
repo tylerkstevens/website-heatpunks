@@ -4,8 +4,13 @@ import { BookSection } from '@/components/education/BookSection';
 import { VideoSection } from '@/components/education/VideoSection';
 
 export const metadata: Metadata = {
-  title: 'Education',
-  description: 'Learn about hashrate heating technology. Free resources, videos, and guides for implementing Bitcoin mining as a heat source.',
+  title: 'Resources',
+  description: 'DIY guides and tutorials for building Bitcoin mining heaters. Learn how to turn hashrate into home heat.',
+  openGraph: {
+    title: 'Resources | Hashrate Heatpunks',
+    description: 'DIY guides and tutorials for building Bitcoin mining heaters. Learn how to turn hashrate into home heat.',
+    images: ['/api/og?title=Resources%20%26%20Guides&subtitle=DIY%20hashrate%20heating%20tutorials&page=education'],
+  },
 };
 
 export default function EducationPage() {

@@ -16,7 +16,48 @@ import { getScheduleData, getSponsors } from '@/lib/schedule';
 
 export const metadata: Metadata = {
   title: 'Summit 2026',
-  description: 'Heatpunk Summit 2026 - February 27-28 in Denver, Colorado. The gathering for bitcoiners and heating professionals advancing hashrate heating technology.',
+  description: 'Heatpunk Summit 2026 - February 27-28 in Denver, CO. Join 150+ builders for workshops, demos, and networking.',
+  openGraph: {
+    title: 'Summit 2026 | Hashrate Heatpunks',
+    description: 'Heatpunk Summit 2026 - February 27-28 in Denver, CO. Join 150+ builders for workshops, demos, and networking.',
+    images: ['/api/og?title=HEATPUNK%20SUMMIT&subtitle=FEB%2027-28%2C%202026%20%E2%80%A2%20DENVER%2C%20CO&page=summit'],
+  },
+};
+
+// Event JSON-LD Schema
+const eventSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: 'Heatpunk Summit 2026',
+  description: 'Annual gathering of hashrate heating builders, featuring workshops, demos, and networking.',
+  startDate: '2026-02-27',
+  endDate: '2026-02-28',
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: {
+    '@type': 'Place',
+    name: 'The Space',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '3700 N Franklin St',
+      addressLocality: 'Denver',
+      addressRegion: 'CO',
+      postalCode: '80205',
+      addressCountry: 'US',
+    },
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: 'Hashrate Heatpunks',
+    url: 'https://heatpunks.org',
+  },
+  offers: {
+    '@type': 'Offer',
+    availability: 'https://schema.org/InStock',
+    price: '0',
+    priceCurrency: 'USD',
+    url: 'https://heatpunks.org/summit',
+  },
 };
 
 export default function SummitPage() {
@@ -25,6 +66,11 @@ export default function SummitPage() {
 
   return (
     <div className="bg-[var(--black)]">
+      {/* Event JSON-LD Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
+      />
       {/* Hero with stats bar */}
       <SummitHero summit={scheduleData.summit} sponsors={sponsors} />
 

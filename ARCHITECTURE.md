@@ -277,6 +277,50 @@ Form Fields:
 • 5 acknowledgement checkboxes (all required)
 ```
 
+### Summit Invitation Flow
+
+```
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│  User clicks │────▶│ Invitation   │────▶│  /api/       │────▶│  /lib/       │
+│  "Request    │     │ Modal        │     │  summit-     │     │  email       │
+│  Invitation" │     │ (client)     │     │  invitation  │     │              │
+└──────────────┘     └──────────────┘     └──────────────┘     └──────────────┘
+                            │                                         │
+                            │                                         ▼
+                     ┌──────┴──────┐                           ┌──────────────┐
+                     │  Validate   │                           │  Proton SMTP │
+                     │  • Name     │                           │  ────────────│
+                     │  • Email    │                           │  TO: summit@ │
+                     │  • Company  │                           │   heatpunks  │
+                     │  • Industry │                           │   .org       │
+                     │  • Why      │                           └──────────────┘
+                     │  • Contrib  │                                  │
+                     └─────────────┘                                  │
+                            │                                         │
+                            │◀────────────────────────────────────────┘
+                            │         Success/Error Response
+                            ▼
+                     ┌──────────────┐
+                     │  Show        │
+                     │  Success     │
+                     │  Message     │
+                     └──────────────┘
+
+Form Fields:
+• name, email, company (text, required)
+• industryFocus (dropdown: Bitcoin Mining, HVAC/Heating, Both, Other)
+• whyAttend (textarea, required)
+• contribution (textarea, required)
+```
+
+### Email Routing
+
+| Form | Destination | Subject Pattern |
+|------|-------------|-----------------|
+| Contact | contact@heatpunks.org | [Heatpunks Contact] Message from {name} |
+| Grants | grants@heatpunks.org | [Heatpunks Grant] {category} - {projectTitle} |
+| Summit Invitation | summit@heatpunks.org | [Summit 2026] Invitation Request - {name} ({company}) |
+
 ### Schedule Data Flow
 
 ```
@@ -493,6 +537,8 @@ const response = await fetch(discourseUrl, {
 │   │   └── page.tsx               # Education page (Server)
 │   ├── /grants
 │   │   └── page.tsx               # Grants page (Server)
+│   ├── /mission
+│   │   └── page.tsx               # Mission page (Server)
 │   ├── /summit
 │   │   ├── page.tsx               # Current summit (Server)
 │   │   ├── /schedule
@@ -504,6 +550,8 @@ const response = await fetch(discourseUrl, {
 │   │   │   └── route.ts           # POST: send contact email
 │   │   ├── /grants
 │   │   │   └── route.ts           # POST: send grant application
+│   │   ├── /summit-invitation
+│   │   │   └── route.ts           # POST: send summit invitation request
 │   │   └── /og
 │   │       └── route.tsx          # GET: generate OG image
 │   └── sitemap.ts                 # Auto-generated sitemap
@@ -535,7 +583,8 @@ const response = await fetch(discourseUrl, {
 │   │   ├── DonateSection.tsx      # Server
 │   │   └── ContactSection.tsx     # Server
 │   ├── /summit
-│   │   ├── SummitHero.tsx         # Server
+│   │   ├── SummitHero.tsx         # Client (modal state)
+│   │   ├── InvitationModal.tsx    # Client (form state, validation)
 │   │   ├── AboutSection.tsx       # Server
 │   │   ├── VenueSection.tsx       # Server
 │   │   ├── Map.tsx                # Server (iframe)
@@ -859,9 +908,10 @@ SMTP_SECURE=false
 SMTP_USER=admin@heatpunks.org
 SMTP_PASS=
 
-# Email recipients
-CONTACT_EMAIL=admin@heatpunks.org
+# Email recipients (routed to specific inboxes)
+CONTACT_EMAIL=contact@heatpunks.org
 GRANTS_EMAIL=grants@heatpunks.org
+SUMMIT_EMAIL=summit@heatpunks.org
 
 # ─────────────────────────────────────
 # Umami Analytics
@@ -991,11 +1041,13 @@ services:
 ### Input Validation
 - Contact form: validate email format, sanitize message content
 - Grants form: validate all required fields, enforce character limits, validate email format
+- Summit invitation form: validate required fields, sanitize all inputs
 - No user-generated content displayed (XSS not a concern for forum titles)
 
 ### API Routes
 - `/api/contact`: Rate limiting recommended if spam becomes an issue
 - `/api/grants`: Same SMTP infrastructure; validate all fields server-side before sending
+- `/api/summit-invitation`: Same SMTP infrastructure; validate required fields
 - No authentication required (no user accounts)
 
 ### Environment Variables
@@ -1007,6 +1059,103 @@ services:
   - X-Content-Type-Options: nosniff
   - X-Frame-Options: SAMEORIGIN
   - Referrer-Policy: origin-when-cross-origin
+
+---
+
+## SEO & Social Architecture
+
+### ADR-009: Dynamic OG Image Generation
+
+**Context:** Each page needs unique, branded OpenGraph images for social sharing.
+
+**Decision:** Use Next.js Edge Runtime with `ImageResponse` for dynamic OG generation.
+
+**Implementation:**
+- `/app/api/og/route.tsx` - Edge function generating 1200x630 PNG
+- Query params: `title`, `subtitle`, `page` (for page-specific styling)
+- Page-specific styles: home (branded), summit (event poster), grants (funding theme)
+
+**Dynamic Summit OG Logic:**
+```
+Event Date: Feb 27-28, 2026
+
+if (currentDate < eventStart) → "FEB 27-28, 2026 • REQUEST INVITATION"
+if (currentDate >= eventStart && currentDate <= eventEnd) → "HAPPENING NOW • DENVER, CO"
+if (currentDate > eventEnd) → "SUMMIT 2026 COMPLETE • WATCH RECAP"
+```
+
+---
+
+### ADR-010: JSON-LD Structured Data
+
+**Context:** Search engines need structured data for rich snippets.
+
+**Decision:** Embed JSON-LD in layout and page components.
+
+**Schemas:**
+1. **Organization** (global in layout.tsx)
+   - Name: "Hashrate Heatpunks"
+   - Parent: "256 Foundation"
+   - Location: Denver, CO
+   - Social links: Twitter, Forum
+
+2. **Event** (summit/page.tsx)
+   - Heatpunk Summit 2026
+   - Dates: Feb 27-28, 2026
+   - Location: Denver, CO
+
+3. **FAQPage** (grants/page.tsx)
+   - Grant program FAQ items
+
+**Implementation:**
+```tsx
+// In layout.tsx (Organization schema)
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Hashrate Heatpunks",
+      // ... rest of schema
+    })
+  }}
+/>
+```
+
+---
+
+### Metadata Strategy
+
+| Page | Title | Description | OG Image Style |
+|------|-------|-------------|---------------|
+| `/` | Hashrate Heatpunks | Join a community of builders turning Bitcoin mining heat into sustainable home heating solutions. | Branded + tagline |
+| `/mission` | Mission \| Hashrate Heatpunks | Our mission: make hashrate heating accessible to everyone. | Mission theme |
+| `/education` | Resources \| Hashrate Heatpunks | DIY guides and tutorials for building Bitcoin mining heaters. | DIY/Tutorial |
+| `/grants` | Grants \| Hashrate Heatpunks | Apply for grants to support hashrate heating projects. | Funding theme |
+| `/summit` | Summit 2026 \| Hashrate Heatpunks | Heatpunk Summit 2026 - February 27-28 in Denver, CO. | Event poster (dynamic) |
+| `/summit/schedule` | Summit Schedule \| Hashrate Heatpunks | Full schedule for Heatpunk Summit 2026. | Event poster |
+
+---
+
+### Twitter Configuration
+
+- Card type: `summary_large_image`
+- Site handle: `@HashHeatpunks`
+- Creator handle: `@HashHeatpunks`
+
+---
+
+### Sitemap Configuration
+
+| URL | Priority | Change Frequency |
+|-----|----------|------------------|
+| `/` | 1.0 | weekly |
+| `/mission` | 0.9 | monthly |
+| `/education` | 0.8 | monthly |
+| `/grants` | 0.9 | monthly |
+| `/summit` | 0.9 | weekly |
+| `/summit/schedule` | 0.8 | weekly |
 
 ---
 

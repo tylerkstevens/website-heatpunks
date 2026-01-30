@@ -6,7 +6,7 @@ const TELEGRAM_URL = 'https://t.me/heatpunks';
 export const siteConfig = {
   name: 'Hashrate Heatpunks',
   tagline: 'A community working on the emerging hashrate heating industry - Marrying the bitcoin mining and heating sectors to bring hashrate back to homes and businesses',
-  description: 'A community of bitcoiners and heating industry specialists advancing the hashrate heating industry.',
+  description: 'Join a community of builders turning Bitcoin mining heat into sustainable home heating solutions.',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://heatpunks.org',
 
   links: {

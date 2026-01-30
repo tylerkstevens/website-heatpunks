@@ -4,7 +4,12 @@ import { siteConfig } from '@/data/site';
 
 export const metadata: Metadata = {
   title: 'Mission',
-  description: 'Our mission is to accelerate the adoption of hashrate heating by building the standards, education, and community infrastructure the industry needs to thrive.',
+  description: 'Our mission: make hashrate heating accessible to everyone. Learn about our vision for sustainable Bitcoin mining heat reuse.',
+  openGraph: {
+    title: 'Mission | Hashrate Heatpunks',
+    description: 'Our mission: make hashrate heating accessible to everyone. Learn about our vision for sustainable Bitcoin mining heat reuse.',
+    images: ['/api/og?title=Our%20Mission&subtitle=Making%20hashrate%20heating%20accessible%20to%20everyone&page=mission'],
+  },
 };
 
 const beliefs = [

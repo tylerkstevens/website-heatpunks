@@ -1,7 +1,12 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
-import { siteConfig } from '@/data/site';
+import { InvitationModal } from './InvitationModal';
 
 export function CTASection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section className="relative py-16 md:py-24 overflow-hidden">
       {/* Background gradient - uses theme-aware CSS class */}
@@ -19,12 +24,12 @@ export function CTASection() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href={`mailto:${siteConfig.contact.email}?subject=Summit 2026 Waitlist`}
+          <button
+            onClick={() => setIsModalOpen(true)}
             className="btn-primary"
           >
             <span className="font-mono text-xs tracking-wider">&gt; GET_ON_WAITLIST</span>
-          </a>
+          </button>
 
           <Link
             href="/summit/schedule"
@@ -50,6 +55,12 @@ export function CTASection() {
           </div>
         </div>
       </div>
+
+      <InvitationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        year={2026}
+      />
     </section>
   );
 }

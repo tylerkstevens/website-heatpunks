@@ -35,6 +35,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
+    site: '@HashHeatpunks',
+    creator: '@HashHeatpunks',
     title: siteConfig.name,
     description: siteConfig.description,
     images: ['/api/og?title=Hashrate%20Heatpunks&subtitle=Bringing%20hashrate%20back%20home'],
@@ -57,6 +59,38 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
+        {/* Organization JSON-LD Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Hashrate Heatpunks',
+              alternateName: 'Heatpunks',
+              url: 'https://heatpunks.org',
+              logo: 'https://heatpunks.org/images/logo.png',
+              foundingDate: '2024',
+              description: 'A community of bitcoiners and heating industry specialists advancing the hashrate heating industry.',
+              parentOrganization: {
+                '@type': 'Organization',
+                name: '256 Foundation',
+                url: 'https://256foundation.org',
+              },
+              address: {
+                '@type': 'PostalAddress',
+                addressLocality: 'Denver',
+                addressRegion: 'CO',
+                addressCountry: 'US',
+              },
+              sameAs: [
+                'https://twitter.com/HashHeatpunks',
+                'https://forum.heatpunks.org',
+                'https://t.me/heatpunks',
+              ],
+            }),
+          }}
+        />
         {/* Umami Analytics - only if configured */}
         {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
           <script

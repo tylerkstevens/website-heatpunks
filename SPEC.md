@@ -429,20 +429,250 @@ days:
 
 ---
 
-## SEO & Social
+## SEO & Social (Detailed Specification)
 
-### Meta Tags
-- Unique title and description per page
-- Canonical URLs
+### Site Identity
+- **Site Name**: Hashrate Heatpunks
+- **Base URL**: https://heatpunks.org
+- **Title Format**: `{Page Name} | Hashrate Heatpunks`
+- **Twitter Handle**: @HashHeatpunks
+- **Location**: Denver, Colorado
+- **Founded**: 2024
+- **Entity Type**: Project of 256 Foundation
 
-### Open Graph Images
-- Auto-generated from page titles
-- Use @vercel/og or similar for dynamic OG image generation
-- Include logo, page title, brand colors
+### Target Keywords (Primary)
+- hashrate heating
+- bitcoin mining heat
+- bitcoin home heating
+- mining heat reuse
 
-### Sitemap
-- Auto-generated sitemap.xml
-- Include all public pages
+### Canonical URL Format
+- Without trailing slash (e.g., `https://heatpunks.org/summit`)
+
+---
+
+### Page-by-Page Metadata
+
+#### Home Page (`/`)
+| Field | Value |
+|-------|-------|
+| Title | `Hashrate Heatpunks` |
+| Description | `Join a community of builders turning Bitcoin mining heat into sustainable home heating solutions.` |
+| OG Image | Unique branded image with logo and tagline |
+| Alt Text | `Hashrate Heatpunks - Bitcoin mining heat reuse community` |
+
+#### Summit Page (`/summit`)
+| Field | Value |
+|-------|-------|
+| Title | `Summit 2026 \| Hashrate Heatpunks` |
+| Description | `Heatpunk Summit 2026 - February 27-28 in Denver, CO. Join 150+ builders for workshops, demos, and networking.` |
+| OG Image | **Dynamic** - Event poster style with bold typography, date (FEB 27-28, 2026), location (Denver, CO), and flame/heat aesthetic. Changes based on event status. |
+| Alt Text | `Heatpunk Summit 2026 - February 27-28, Denver Colorado` |
+
+#### Summit Schedule Page (`/summit/schedule`)
+| Field | Value |
+|-------|-------|
+| Title | `Summit Schedule \| Hashrate Heatpunks` |
+| Description | `Full schedule for Heatpunk Summit 2026. Workshops, demos, panels, and networking events.` |
+| OG Image | Use Summit page OG image |
+| Alt Text | `Heatpunk Summit 2026 Schedule` |
+
+#### Grants Page (`/grants`)
+| Field | Value |
+|-------|-------|
+| Title | `Grants \| Hashrate Heatpunks` |
+| Description | `Apply for grants to support hashrate heating projects. Funding for builders, researchers, and educators.` |
+| OG Image | Unique image with grant/funding theme |
+| Alt Text | `Hashrate Heatpunks Grants Program` |
+| Note | Do NOT mention Bitcoin payment in meta description |
+
+#### Mission Page (`/mission`)
+| Field | Value |
+|-------|-------|
+| Title | `Mission \| Hashrate Heatpunks` |
+| Description | `Our mission: make hashrate heating accessible to everyone. Learn about our vision for sustainable Bitcoin mining heat reuse.` |
+| OG Image | Unique branded mission image |
+| Alt Text | `Hashrate Heatpunks Mission` |
+
+#### Education/Resources Page (`/education`)
+| Field | Value |
+|-------|-------|
+| Title | `Resources \| Hashrate Heatpunks` |
+| Description | `DIY guides and tutorials for building Bitcoin mining heaters. Learn how to turn hashrate into home heat.` |
+| OG Image | Unique educational/DIY themed image |
+| Alt Text | `Hashrate Heating Resources and Guides` |
+| Keywords Focus | DIY bitcoin heater, build mining heater, hashrate heating guide |
+
+#### Forum Redirect (`/forum`)
+| Field | Value |
+|-------|-------|
+| Title | `Forum \| Hashrate Heatpunks` |
+| Description | `Join the Hashrate Heatpunks community discussion. Ask questions, share projects, and connect with builders.` |
+| OG Image | Unique "Join the Discussion" themed image |
+| Alt Text | `Hashrate Heatpunks Community Forum` |
+| Note | Redirects to forum.heatpunks.org |
+
+---
+
+### Structured Data (JSON-LD)
+
+#### Organization Schema (Global - in layout.tsx)
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Hashrate Heatpunks",
+  "alternateName": "Heatpunks",
+  "url": "https://heatpunks.org",
+  "logo": "https://heatpunks.org/images/logo.png",
+  "foundingDate": "2024",
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "256 Foundation"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Denver",
+    "addressRegion": "CO",
+    "addressCountry": "US"
+  },
+  "sameAs": [
+    "https://twitter.com/HashHeatpunks",
+    "https://forum.heatpunks.org"
+  ]
+}
+```
+
+#### Event Schema (Summit Page)
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Heatpunk Summit 2026",
+  "description": "Annual gathering of hashrate heating builders, featuring workshops, demos, and networking.",
+  "startDate": "2026-02-27",
+  "endDate": "2026-02-28",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "Denver",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Denver",
+      "addressRegion": "CO",
+      "addressCountry": "US"
+    }
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "Hashrate Heatpunks",
+    "url": "https://heatpunks.org"
+  },
+  "offers": {
+    "@type": "Offer",
+    "availability": "https://schema.org/InStock",
+    "price": "0",
+    "priceCurrency": "USD",
+    "url": "https://heatpunks.org/summit"
+  }
+}
+```
+
+#### FAQ Schema (Grants Page)
+Include FAQ structured data for common grant questions:
+- What types of projects are eligible?
+- How do I apply for a grant?
+- What is the grant review process?
+- How are grants disbursed?
+
+---
+
+### Sitemap Configuration
+
+Include all public pages with appropriate priorities:
+
+| URL | Priority | Change Frequency |
+|-----|----------|------------------|
+| `/` | 1.0 | weekly |
+| `/summit` | 0.9 | weekly |
+| `/summit/schedule` | 0.8 | weekly |
+| `/grants` | 0.9 | monthly |
+| `/mission` | 0.9 | monthly |
+| `/education` | 0.8 | monthly |
+
+---
+
+### Robots.txt
+
+```txt
+User-agent: *
+Allow: /
+
+Sitemap: https://heatpunks.org/sitemap.xml
+```
+
+---
+
+### OpenGraph Images
+
+#### Generation Method
+Use Next.js dynamic OG image generation via `/app/api/og/route.tsx`
+
+#### Image Specifications
+- **Dimensions**: 1200 x 630 pixels (standard OG size)
+- **Format**: PNG
+- **File Size**: Optimize for < 300KB
+
+#### Per-Page Image Requirements
+
+| Page | Style | Key Elements |
+|------|-------|--------------|
+| Home | Branded | Logo, tagline "Undermining the status quo", flame aesthetic |
+| Summit | Event poster | Bold typography, "FEB 27-28, 2026", "DENVER, CO", flame/heat gradient |
+| Grants | Funding theme | "Grants Program" text, supportive visual elements |
+| Mission | Mission statement | Logo, "Our Mission" or key mission text |
+| Education | DIY/Tutorial | Educational visual, "Resources & Guides" text |
+| Forum | Community | "Join the Discussion" text, community vibe |
+
+#### Dynamic Summit OG Logic
+The Summit OG image should update based on event status:
+- **Pre-event**: "FEB 27-28, 2026 • REQUEST INVITATION"
+- **During event**: "HAPPENING NOW • DENVER, CO"
+- **Post-event**: "SUMMIT 2026 COMPLETE • WATCH RECAP"
+
+---
+
+### Alt Text Patterns
+
+#### Logo Images
+- Main logo: `Hashrate Heatpunks logo`
+- Dark mode logo: `Hashrate Heatpunks logo (light version)`
+
+#### Sponsor Logos
+- Pattern: `{Sponsor Name} logo - Heatpunk Summit sponsor`
+- Example: `Braiins logo - Heatpunk Summit sponsor`
+
+#### OG Images
+- Pattern: `{Page title} - Hashrate Heatpunks`
+- Example: `Heatpunk Summit 2026 - February 27-28, Denver Colorado`
+
+---
+
+### Twitter Card Configuration
+- Card type: `summary_large_image` for all pages
+- Site handle: `@HashHeatpunks`
+
+---
+
+### Testing Checklist
+
+After implementation, verify with:
+- [ ] Facebook Sharing Debugger (https://developers.facebook.com/tools/debug/)
+- [ ] Twitter Card Validator (https://cards-dev.twitter.com/validator)
+- [ ] LinkedIn Post Inspector (https://www.linkedin.com/post-inspector/)
+- [ ] Google Rich Results Test (https://search.google.com/test/rich-results)
+- [ ] Schema.org Validator (https://validator.schema.org/)
 
 ---
 
