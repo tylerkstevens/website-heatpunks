@@ -1,4 +1,10 @@
-import type { DiscourseLatestResponse, DiscourseCategoriesResponse, ForumTopic, ForumImage } from '@/types/discourse';
+import type {
+  DiscourseLatestResponse,
+  DiscourseCategoriesResponse,
+  DiscourseTopicDetailResponse,
+  ForumTopic,
+  ForumImage
+} from '@/types/discourse';
 
 const DISCOURSE_URL = process.env.DISCOURSE_URL || 'https://forum.heatpunks.org';
 
@@ -13,6 +19,110 @@ function getDiscourseHeaders(): HeadersInit {
     headers['Api-Username'] = process.env.DISCOURSE_API_USERNAME;
   }
   return headers;
+}
+
+// Validate Discourse API response structure
+function isValidDiscourseResponse(data: any): data is DiscourseLatestResponse {
+  return (
+    data &&
+    typeof data === 'object' &&
+    data.topic_list &&
+    typeof data.topic_list === 'object' &&
+    Array.isArray(data.topic_list.topics)
+  );
+}
+
+// Fetch with retry logic and exponential backoff
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit,
+  retries = 2
+): Promise<Response> {
+  // Disable retries in test environment for faster tests
+  const isTest = process.env.NODE_ENV === 'test';
+  const maxRetries = isTest ? 0 : retries;
+
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetch(url, options);
+
+      // If successful, return immediately
+      if (response.ok) {
+        return response;
+      }
+
+      // If it's the last attempt or a client error (4xx), don't retry
+      if (attempt === maxRetries || (response.status >= 400 && response.status < 500)) {
+        return response;
+      }
+
+      // Wait with exponential backoff before retrying (1s, 2s, 4s...)
+      const delay = 1000 * Math.pow(2, attempt);
+      await new Promise(resolve => setTimeout(resolve, delay));
+
+    } catch (error) {
+      // If it's the last attempt, throw the error
+      if (attempt === maxRetries) {
+        throw error;
+      }
+
+      // Wait with exponential backoff before retrying
+      const delay = 1000 * Math.pow(2, attempt);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+
+  // This should never be reached, but TypeScript requires it
+  throw new Error('Failed to fetch after retries');
+}
+
+// Fetch topic details and extract images from all posts (including replies)
+async function getTopicImages(topicId: number, topicTitle: string, topicSlug: string): Promise<string[]> {
+  try {
+    const response = await fetchWithRetry(`${DISCOURSE_URL}/t/${topicId}.json`, {
+      headers: getDiscourseHeaders(),
+      next: { revalidate: 300 }, // Cache for 5 minutes
+    });
+
+    if (!response.ok) {
+      return [];
+    }
+
+    const topic: DiscourseTopicDetailResponse = await response.json();
+
+    // Validate response structure
+    if (!topic.post_stream || !Array.isArray(topic.post_stream.posts)) {
+      return [];
+    }
+
+    const images: string[] = [];
+
+    // Extract images from all posts (including replies)
+    for (const post of topic.post_stream.posts) {
+      if (!post.cooked) continue;
+
+      // Match all img tags and extract src attributes
+      const imgMatches = post.cooked.match(/<img[^>]+src=["']([^"'>]+)["'][^>]*>/g);
+      if (imgMatches) {
+        for (const imgTag of imgMatches) {
+          const srcMatch = imgTag.match(/src=["']([^"'>]+)["']/);
+          if (srcMatch && srcMatch[1]) {
+            const imgUrl = srcMatch[1];
+            // Convert relative URLs to absolute
+            const absoluteUrl = imgUrl.startsWith('http')
+              ? imgUrl
+              : `${DISCOURSE_URL}${imgUrl}`;
+            images.push(absoluteUrl);
+          }
+        }
+      }
+    }
+
+    return images;
+  } catch (error) {
+    console.error(`Failed to fetch images for topic ${topicId}:`, error);
+    return [];
+  }
 }
 
 export function getTimeAgo(dateString: string): string {
@@ -53,13 +163,13 @@ export async function getDiscourseData(topicsLimit = 10, imagesLimit = 12): Prom
   try {
     const headers = getDiscourseHeaders();
 
-    // Fetch topics and categories in parallel (single API call for topics)
+    // Fetch topics and categories in parallel with retry logic
     const [topicsResponse, categoriesResponse] = await Promise.all([
-      fetch(`${DISCOURSE_URL}/latest.json`, {
+      fetchWithRetry(`${DISCOURSE_URL}/latest.json`, {
         headers,
         next: { revalidate: 300 }, // Cache for 5 minutes
       }),
-      fetch(`${DISCOURSE_URL}/categories.json`, {
+      fetchWithRetry(`${DISCOURSE_URL}/categories.json`, {
         headers,
         next: { revalidate: 3600 }, // Cache categories for 1 hour
       }),
@@ -72,6 +182,12 @@ export async function getDiscourseData(topicsLimit = 10, imagesLimit = 12): Prom
 
     const data: DiscourseLatestResponse = await topicsResponse.json();
 
+    // Validate response structure
+    if (!isValidDiscourseResponse(data)) {
+      console.error('Invalid Discourse response structure:', data);
+      return null;
+    }
+
     // Build category map from categories response
     let categoryMap: Record<number, string> = {};
     if (categoriesResponse.ok) {
@@ -82,31 +198,65 @@ export async function getDiscourseData(topicsLimit = 10, imagesLimit = 12): Prom
     }
 
     // Transform to topics format
-    const topics: ForumTopic[] = data.topic_list.topics
-      .slice(0, topicsLimit)
-      .map((topic) => ({
-        id: topic.id,
-        title: topic.fancy_title || topic.title,
-        excerpt: topic.excerpt || '',
-        category: categoryMap[topic.category_id] || 'General',
-        url: getTopicUrl(topic.slug, topic.id),
-        timeAgo: getTimeAgo(topic.last_posted_at || topic.created_at),
-      }));
+    try {
+      const topics: ForumTopic[] = data.topic_list.topics
+        .slice(0, topicsLimit)
+        .map((topic) => ({
+          id: topic.id,
+          title: topic.fancy_title || topic.title,
+          excerpt: topic.excerpt || '',
+          category: categoryMap[topic.category_id] || 'General',
+          url: getTopicUrl(topic.slug, topic.id),
+          timeAgo: getTimeAgo(topic.last_posted_at || topic.created_at),
+        }));
 
-    // Transform to images format (filter topics with images)
-    const images: ForumImage[] = data.topic_list.topics
-      .filter((topic) => topic.image_url)
-      .slice(0, imagesLimit)
-      .map((topic) => ({
-        id: topic.id,
-        url: topic.image_url!.startsWith('http')
-          ? topic.image_url!
-          : `${DISCOURSE_URL}${topic.image_url}`,
-        topicTitle: topic.fancy_title || topic.title,
-        topicUrl: getTopicUrl(topic.slug, topic.id),
-      }));
+      // Transform to images format (filter topics with images)
+      // First pass: get images from topics with image_url (fast)
+      const images: ForumImage[] = data.topic_list.topics
+        .filter((topic) => topic.image_url)
+        .slice(0, imagesLimit)
+        .map((topic) => ({
+          id: topic.id,
+          url: topic.image_url!.startsWith('http')
+            ? topic.image_url!
+            : `${DISCOURSE_URL}${topic.image_url}`,
+          topicTitle: topic.fancy_title || topic.title,
+          topicUrl: getTopicUrl(topic.slug, topic.id),
+        }));
 
-    return { topics, images };
+      // Second pass: if we need more images, fetch from topics without image_url
+      // Limit to 5 additional API calls to balance coverage vs. performance
+      if (images.length < imagesLimit) {
+        const topicsWithoutImages = data.topic_list.topics
+          .filter((topic) => !topic.image_url)
+          .slice(0, 5); // Max 5 additional API calls
+
+        for (const topic of topicsWithoutImages) {
+          if (images.length >= imagesLimit) break; // Stop if we have enough images
+
+          const replyImages = await getTopicImages(
+            topic.id,
+            topic.fancy_title || topic.title,
+            topic.slug
+          );
+
+          // Add first image from replies if available
+          if (replyImages.length > 0) {
+            images.push({
+              id: topic.id,
+              url: replyImages[0],
+              topicTitle: topic.fancy_title || topic.title,
+              topicUrl: getTopicUrl(topic.slug, topic.id),
+            });
+          }
+        }
+      }
+
+      return { topics, images };
+    } catch (processingError) {
+      console.error('Error processing Discourse data:', processingError);
+      return null;
+    }
   } catch (error) {
     console.error('Failed to fetch Discourse data:', error);
     return null;

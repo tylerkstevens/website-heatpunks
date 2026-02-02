@@ -7,9 +7,29 @@ interface CommunityGalleryProps {
 }
 
 export function CommunityGallery({ images }: CommunityGalleryProps) {
-  // Hide section if no images available
+  // Show fallback UI if no images available
   if (!images || images.length === 0) {
-    return null;
+    return (
+      <section className="py-16 md:py-24 bg-[var(--background-alt)] border-t border-[var(--card-border)]">
+        <div className="section-container text-center">
+          <span className="section-tag">[COMMUNITY]</span>
+          <h2 className="font-mono text-2xl md:text-3xl font-bold tracking-wide mt-4">
+            FROM THE <span className="text-[var(--accent)]">FORUM</span>
+          </h2>
+          <p className="text-[var(--muted)] mt-4 mb-6">
+            Community images temporarily unavailable. Check back soon!
+          </p>
+          <a
+            href={siteConfig.links.forum}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary inline-block"
+          >
+            <span className="font-mono text-xs tracking-wider">VISIT FORUM DIRECTLY</span>
+          </a>
+        </div>
+      </section>
+    );
   }
 
   return (

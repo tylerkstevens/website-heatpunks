@@ -7,9 +7,29 @@ interface ForumFeedProps {
 }
 
 export function ForumFeed({ topics }: ForumFeedProps) {
-  // Hide section if no topics
+  // Show fallback UI if no topics
   if (!topics || topics.length === 0) {
-    return null;
+    return (
+      <section className="py-16 md:py-24 bg-[var(--background)]">
+        <div className="section-container text-center">
+          <span className="section-tag">[001]</span>
+          <h2 className="font-mono text-2xl md:text-3xl font-bold tracking-wide mt-4">
+            COMMUNITY DISCUSSIONS
+          </h2>
+          <p className="text-[var(--muted)] mt-4 mb-6">
+            Forum topics temporarily unavailable. Check back soon!
+          </p>
+          <a
+            href={siteConfig.links.forum}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary inline-block"
+          >
+            <span className="font-mono text-xs tracking-wider">VISIT FORUM DIRECTLY</span>
+          </a>
+        </div>
+      </section>
+    );
   }
 
   return (

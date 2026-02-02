@@ -56,3 +56,21 @@ export interface ForumTopic {
   url: string;
   timeAgo: string;
 }
+
+export interface DiscoursePost {
+  id: number;
+  post_number: number;
+  cooked: string; // HTML content
+  user_id: number;
+  created_at: string;
+}
+
+export interface DiscourseTopicDetailResponse {
+  id: number;
+  title: string;
+  fancy_title: string;
+  slug: string;
+  post_stream: {
+    posts: DiscoursePost[];
+  };
+}

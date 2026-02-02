@@ -495,4 +495,90 @@ describe('getTopicsWithImages', () => {
 
     expect(images).toEqual([]);
   });
+
+  it('returns null when response is missing topic_list', async () => {
+    const malformedResponse = {
+      users: [],
+      // Missing topic_list field
+    };
+
+    mockFetch
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => malformedResponse,
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockCategoriesResponse,
+      });
+
+    const data = await getDiscourseData();
+
+    expect(data).toBeNull();
+  });
+
+  it('returns null when topic_list.topics is not an array', async () => {
+    const malformedResponse = {
+      users: [],
+      topic_list: {
+        topics: 'not-an-array', // Invalid: should be array
+      },
+    };
+
+    mockFetch
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => malformedResponse,
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockCategoriesResponse,
+      });
+
+    const data = await getDiscourseData();
+
+    expect(data).toBeNull();
+  });
+
+  it('returns null when topic_list is null', async () => {
+    const malformedResponse = {
+      users: [],
+      topic_list: null,
+    };
+
+    mockFetch
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => malformedResponse,
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockCategoriesResponse,
+      });
+
+    const data = await getDiscourseData();
+
+    expect(data).toBeNull();
+  });
+
+  it('returns null when response is completely invalid', async () => {
+    const malformedResponse = {
+      invalid: 'structure',
+      random: 'data',
+    };
+
+    mockFetch
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => malformedResponse,
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockCategoriesResponse,
+      });
+
+    const data = await getDiscourseData();
+
+    expect(data).toBeNull();
+  });
 });

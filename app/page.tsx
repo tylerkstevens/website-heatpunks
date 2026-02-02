@@ -4,6 +4,7 @@ import { CommunityGallery } from '@/components/landing/CommunityGallery';
 import { LinksSection } from '@/components/landing/LinksSection';
 import { GrantsSection } from '@/components/landing/GrantsSection';
 import { ContactSection } from '@/components/landing/ContactSection';
+import { ForumSectionErrorBoundary } from '@/components/ErrorBoundary';
 import { getDiscourseData } from '@/lib/discourse';
 
 export default async function HomePage() {
@@ -13,8 +14,10 @@ export default async function HomePage() {
   return (
     <div>
       <HeroSection />
-      <ForumFeed topics={discourseData?.topics} />
-      <CommunityGallery images={discourseData?.images} />
+      <ForumSectionErrorBoundary>
+        <ForumFeed topics={discourseData?.topics} />
+        <CommunityGallery images={discourseData?.images} />
+      </ForumSectionErrorBoundary>
       <LinksSection />
       <GrantsSection />
       <ContactSection />
