@@ -1,9 +1,21 @@
 'use client';
 
 import { useState } from 'react';
-import type { Session, Summit } from '@/types/schedule';
+import type { Session, Summit, Person } from '@/types/schedule';
 import { formatTime } from '@/lib/utils';
 import { AddToCalendar } from '@/components/shared/AddToCalendar';
+
+// Helper function to format a person (name with affiliation)
+function formatPerson(person: Person | string): string {
+  if (typeof person === 'string') return person;
+  return person.affiliation ? `${person.name} (${person.affiliation})` : person.name;
+}
+
+// Helper function to format a list of people
+function formatPeople(people: Person[] | string[] | undefined): string {
+  if (!people || people.length === 0) return '';
+  return people.map(formatPerson).join(', ');
+}
 
 interface SessionCardProps {
   session: Session;
@@ -24,7 +36,7 @@ const sessionTypeStyles: Record<string, string> = {
 export function SessionCard({ session, date, summit }: SessionCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const hasExpandableContent = session.description || (session.speakers && session.speakers.length > 0);
+  const hasExpandableContent = session.description || session.moderator || (session.speakers && session.speakers.length > 0);
   const typeStyle = sessionTypeStyles[session.type] || sessionTypeStyles.talk;
 
   return (
@@ -75,10 +87,17 @@ export function SessionCard({ session, date, summit }: SessionCardProps) {
                 </span>
               )}
 
+              {/* Moderator (if exists) */}
+              {session.moderator && (
+                <span className="font-mono text-[10px] text-[var(--muted)]">
+                  Moderator: {formatPerson(session.moderator)}
+                </span>
+              )}
+
               {/* Speakers */}
               {session.speakers && session.speakers.length > 0 && (
                 <span className="font-mono text-[10px] text-[var(--terminal-color)]">
-                  {session.speakers.join(', ')}
+                  {formatPeople(session.speakers)}
                 </span>
               )}
             </div>
