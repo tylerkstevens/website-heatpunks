@@ -4,6 +4,14 @@ interface WorkshopsSectionProps {
   workshops: Session[];
 }
 
+// Short, landing-page specific descriptions for workshops
+const workshopSummaries: Record<string, string> = {
+  'day1-workshop-architect': 'Work with leading architects to define industry standards for hashrate heating systems—from certifications to client education.',
+  'day1-workshop-boiler': 'Tour The Space\'s live bitcoin-heated radiant floor system. Learn hydronic integration challenges and control solutions from experts.',
+  'day2-workshop-canaan': 'Direct access to Canaan\'s team. Share builder feedback on firmware, thermals, and hardware to shape home mining ASICs.',
+  'day2-workshop-home-assistant': 'Integrate miners into Home Assistant. Build automations triggered by thermostats, solar, and energy prices—no cloud required.',
+};
+
 export function WorkshopsSection({ workshops }: WorkshopsSectionProps) {
   return (
     <section className="relative py-16 md:py-24 bg-gradient-to-b from-[var(--card-background)] to-[var(--background)]">
@@ -37,7 +45,7 @@ export function WorkshopsSection({ workshops }: WorkshopsSectionProps) {
                   {workshop.title}
                 </h4>
                 <p className="text-xs text-[var(--muted)] leading-relaxed">
-                  {workshop.description || 'Workshop details coming soon'}
+                  {workshopSummaries[workshop.id] || workshop.description || 'Workshop details coming soon'}
                 </p>
               </div>
             ))
