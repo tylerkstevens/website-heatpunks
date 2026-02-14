@@ -25,8 +25,8 @@ export function DetailsSection({ summit, scheduleData }: DetailsSectionProps) {
             <p className="text-sm text-[var(--muted)] leading-relaxed">
               <strong className="text-[var(--foreground)] block mb-1">Feb 27-28, {summit.year}</strong>
               Pre-Summit: Feb 26 - Ski Day + Evening Happy Hour<br />
-              Doors: {formatTime(timing.doorsOpen)} MT<br />
-              Welcome: {formatTime(timing.welcomeTime)} MT<br />
+              Doors, Registration & Breakfast: {formatTime(timing.doorsOpen)} MT<br />
+              Welcome & Programming Start: {formatTime(timing.welcomeTime)} MT<br />
               Programming ends: {formatTime(timing.programmingEnd)} MT Saturday<br />
               2x Evening Activities: Beer Garden Dinner & Hot Tub BBQ<br />
             </p>
