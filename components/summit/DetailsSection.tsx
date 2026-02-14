@@ -1,10 +1,20 @@
-import type { Summit } from '@/types/schedule';
+import type { Summit, ScheduleData } from '@/types/schedule';
+import { getEventTiming, formatTime } from '@/lib/scheduleUtils';
 
 interface DetailsSectionProps {
   summit: Summit;
+  scheduleData: ScheduleData;
 }
 
-export function DetailsSection({ summit }: DetailsSectionProps) {
+export function DetailsSection({ summit, scheduleData }: DetailsSectionProps) {
+  const timing = getEventTiming(scheduleData);
+
+  // Get happy hour link from schedule data
+  const happyHourSession = scheduleData.days
+    .flatMap(day => day.sessions)
+    .find(session => session.id === 'presummit-happy-hour');
+  const happyHourLink = happyHourSession?.link || 'https://luma.com/j4sh7s8s';
+
   return (
     <section className="py-16 md:py-24 bg-[var(--background)]">
       <div className="section-container">
@@ -14,9 +24,11 @@ export function DetailsSection({ summit }: DetailsSectionProps) {
             <h3 className="font-mono text-xs text-[var(--terminal-color)] mb-3">&gt; WHEN</h3>
             <p className="text-sm text-[var(--muted)] leading-relaxed">
               <strong className="text-[var(--foreground)] block mb-1">Feb 27-28, {summit.year}</strong>
-              Pre-Summit: Feb 26 - Ski Day + Happy Hour<br />
-              Start: 10 AM MST (doors 8 AM)<br />
-              End: ~3 PM MST Saturday
+              Pre-Summit: Feb 26 - Ski Day + Evening Happy Hour<br />
+              Doors: {formatTime(timing.doorsOpen)} MT<br />
+              Welcome: {formatTime(timing.welcomeTime)} MT<br />
+              Programming ends: {formatTime(timing.programmingEnd)} MT Saturday<br />
+              2x Evening Activities: Beer Garden Dinner & Hot Tub BBQ<br />
             </p>
           </div>
 
@@ -48,7 +60,7 @@ export function DetailsSection({ summit }: DetailsSectionProps) {
                 </p>
               </div>
               <a
-                href="https://lu.ma/j4sh7s8s"
+                href={happyHourLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-outline whitespace-nowrap border-[var(--terminal-color)] text-[var(--terminal-color)] hover:bg-[var(--terminal-color)] hover:text-[var(--background)]"

@@ -8,10 +8,17 @@ import { InvitationModal } from './InvitationModal';
 interface SummitHeroProps {
   summit: Summit;
   sponsors?: Sponsor[];
+  stats?: {
+    workshops: number;
+    demos: number;
+  };
 }
 
-export function SummitHero({ summit, sponsors }: SummitHeroProps) {
+export function SummitHero({ summit, sponsors, stats }: SummitHeroProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const workshopCount = stats?.workshops ?? 4;
+  const demoCount = stats?.demos ?? 10;
 
   return (
     <>
@@ -139,8 +146,8 @@ export function SummitHero({ summit, sponsors }: SummitHeroProps) {
         <div className="flex justify-center gap-8 md:gap-16 px-4 min-w-max">
           <Stat value="2" label="DAYS" />
           <Stat value="150+" label="BUILDERS" />
-          <Stat value="4+" label="WORKSHOPS" />
-          <Stat value="10+" label="DEMOS" />
+          <Stat value={workshopCount.toString()} label="WORKSHOPS" />
+          <Stat value="15+" label="DEMOS" />
           <Stat value="1" label="SKI DAY" />
         </div>
       </div>

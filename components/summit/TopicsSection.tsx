@@ -9,7 +9,7 @@ export function TopicsSection() {
     'Sovereign Smart Homes',
     'Live Hardware Demonstrations',
     'Cross-Industry Q&A',
-    '+ More announced via email',
+    'Educating the Trades',
   ];
 
   const half = Math.ceil(topics.length / 2);

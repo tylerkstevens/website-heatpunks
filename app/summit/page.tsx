@@ -13,6 +13,7 @@ import { SummitCommunitySection } from '@/components/summit/SummitCommunitySecti
 import { SponsorGrid } from '@/components/summit/SponsorGrid';
 import { FAQSection } from '@/components/summit/FAQSection';
 import { getScheduleData, getSponsors } from '@/lib/schedule';
+import { getSessionsByType } from '@/lib/scheduleUtils';
 
 export const metadata: Metadata = {
   title: 'Summit 2026',
@@ -64,6 +65,13 @@ export default function SummitPage() {
   const scheduleData = getScheduleData();
   const sponsors = getSponsors();
 
+  // Extract workshops and calculate stats from schedule data
+  const workshops = getSessionsByType(scheduleData, 'workshop');
+  const stats = {
+    workshops: workshops.length,
+    demos: getSessionsByType(scheduleData, 'demo').length,
+  };
+
   return (
     <div className="bg-[var(--black)]">
       {/* Event JSON-LD Schema */}
@@ -72,7 +80,7 @@ export default function SummitPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
       />
       {/* Hero with stats bar */}
-      <SummitHero summit={scheduleData.summit} sponsors={sponsors} />
+      <SummitHero summit={scheduleData.summit} sponsors={sponsors} stats={stats} />
 
       {/* [001] About */}
       <AboutSection />
@@ -84,7 +92,7 @@ export default function SummitPage() {
       <WhyWhoSection />
 
       {/* [003] Workshops */}
-      <WorkshopsSection />
+      <WorkshopsSection workshops={workshops} />
 
       {/* [004] Topics */}
       <TopicsSection />
@@ -93,7 +101,7 @@ export default function SummitPage() {
       <HighlightsSection />
 
       {/* When/Where Details */}
-      <DetailsSection summit={scheduleData.summit} />
+      <DetailsSection summit={scheduleData.summit} scheduleData={scheduleData} />
 
       {/* Interactive Map */}
       <VenueSection summit={scheduleData.summit} />
