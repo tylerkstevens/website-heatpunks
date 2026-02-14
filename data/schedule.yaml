@@ -33,6 +33,7 @@ days:
         description: "Network with speakers and attendees at The Space on Thursday, February 26 (evening). Open to the public—drinks and light refreshments provided. Summit ticket holders: You can register early during the happy hour."
         location: "The Space"
         isPublic: true
+        link: "https://luma.com/j4sh7s8s"
 
   # Day 1 (Friday, Feb 27)
   - date: "2026-02-27"

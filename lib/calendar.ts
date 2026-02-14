@@ -6,27 +6,59 @@ interface CalendarEvent {
   location: string;
   start: Date;
   end: Date;
+  dateString: string; // Store the date string for proper formatting
+  startTime: string;  // Store the time string (HH:MM)
+  endTime: string;    // Store the time string (HH:MM)
 }
 
-function formatDateForICS(date: Date): string {
-  return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+// Format date for ICS with timezone (America/Denver)
+function formatDateTimeForICS(dateString: string, timeString: string): string {
+  // dateString format: "2026-02-27"
+  // timeString format: "09:00"
+  const [year, month, day] = dateString.split('-');
+  const [hour, minute] = timeString.split(':');
+
+  // Format as YYYYMMDDTHHMMSS for local time
+  return `${year}${month}${day}T${hour}${minute}00`;
 }
 
 function formatDateForGoogle(date: Date): string {
   return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 }
 
+// Mountain Time (Denver) timezone definition for ICS
+const MOUNTAIN_TIMEZONE = `BEGIN:VTIMEZONE
+TZID:America/Denver
+BEGIN:STANDARD
+DTSTART:20251102T020000
+TZOFFSETFROM:-0600
+TZOFFSETTO:-0700
+TZNAME:MST
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:20260308T020000
+TZOFFSETFROM:-0700
+TZOFFSETTO:-0600
+TZNAME:MDT
+END:DAYLIGHT
+END:VTIMEZONE`;
+
 export function generateICSContent(event: CalendarEvent): string {
+  const startDateTime = formatDateTimeForICS(event.dateString, event.startTime);
+  const endDateTime = formatDateTimeForICS(event.dateString, event.endTime);
+  const dtstamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+
   const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Heatpunks//Summit//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
+${MOUNTAIN_TIMEZONE}
 BEGIN:VEVENT
 UID:${Date.now()}@heatpunks.org
-DTSTAMP:${formatDateForICS(new Date())}
-DTSTART:${formatDateForICS(event.start)}
-DTEND:${formatDateForICS(event.end)}
+DTSTAMP:${dtstamp}
+DTSTART;TZID=America/Denver:${startDateTime}
+DTEND;TZID=America/Denver:${endDateTime}
 SUMMARY:${escapeICSText(event.title)}
 DESCRIPTION:${escapeICSText(event.description)}
 LOCATION:${escapeICSText(event.location)}
@@ -72,16 +104,9 @@ export function createSessionEvent(
   date: string,
   summit: Summit
 ): CalendarEvent {
-  const [startHour, startMin] = session.start.split(':').map(Number);
-  const [endHour, endMin] = session.end.split(':').map(Number);
-
-  const startDate = new Date(`${date}T${session.start}:00`);
-  const endDate = new Date(`${date}T${session.end}:00`);
-
-  // Adjust for Mountain Time (UTC-7)
-  // Note: In production, you'd use a proper timezone library
-  startDate.setHours(startDate.getHours() + 7);
-  endDate.setHours(endDate.getHours() + 7);
+  // Create Date objects for Google Calendar (which handles timezones differently)
+  const startDate = new Date(`${date}T${session.start}:00-07:00`); // MST offset
+  const endDate = new Date(`${date}T${session.end}:00-07:00`); // MST offset
 
   return {
     title: `${session.title} - Heatpunk Summit ${summit.year}`,
@@ -91,20 +116,27 @@ export function createSessionEvent(
       : `${summit.venue.name}, ${summit.venue.address}`,
     start: startDate,
     end: endDate,
+    dateString: date,
+    startTime: session.start,
+    endTime: session.end,
   };
 }
 
 export function createFullEventICS(summit: Summit, days: { date: string; sessions: Session[] }[]): string {
   const events: string[] = [];
+  const dtstamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 
   for (const day of days) {
     for (const session of day.sessions) {
       const event = createSessionEvent(session, day.date, summit);
+      const startDateTime = formatDateTimeForICS(event.dateString, event.startTime);
+      const endDateTime = formatDateTimeForICS(event.dateString, event.endTime);
+
       events.push(`BEGIN:VEVENT
 UID:${session.id}-${Date.now()}@heatpunks.org
-DTSTAMP:${formatDateForICS(new Date())}
-DTSTART:${formatDateForICS(event.start)}
-DTEND:${formatDateForICS(event.end)}
+DTSTAMP:${dtstamp}
+DTSTART;TZID=America/Denver:${startDateTime}
+DTEND;TZID=America/Denver:${endDateTime}
 SUMMARY:${escapeICSText(event.title)}
 DESCRIPTION:${escapeICSText(event.description)}
 LOCATION:${escapeICSText(event.location)}
@@ -123,6 +155,8 @@ PRODID:-//Heatpunks//Summit//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:Heatpunk Summit ${summit.year}
+X-WR-TIMEZONE:America/Denver
+${MOUNTAIN_TIMEZONE}
 ${events.join('\n')}
 END:VCALENDAR`;
 }
