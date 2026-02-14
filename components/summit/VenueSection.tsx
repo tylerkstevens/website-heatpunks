@@ -65,11 +65,17 @@ export function VenueSection({ summit }: VenueSectionProps) {
 
           {/* Map */}
           <div className="h-[400px] border border-[var(--card-border)] overflow-hidden">
-            <Map
-              lat={summit.venue.coordinates.lat}
-              lng={summit.venue.coordinates.lng}
-              title={summit.venue.name}
-            />
+            {summit.venue.coordinates ? (
+              <Map
+                lat={summit.venue.coordinates.lat}
+                lng={summit.venue.coordinates.lng}
+                title={summit.venue.name}
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full bg-[var(--card-background)] text-[var(--muted)] font-mono text-sm">
+                Map coordinates not available
+              </div>
+            )}
           </div>
         </div>
       </div>
