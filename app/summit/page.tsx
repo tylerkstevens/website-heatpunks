@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { SummitHero } from '@/components/summit/SummitHero';
 import { AboutSection } from '@/components/summit/AboutSection';
+import { InfoDeckSection } from '@/components/summit/InfoDeckSection';
 import { SummitVideoSection } from '@/components/summit/SummitVideoSection';
 import { WhyWhoSection } from '@/components/summit/WhyWhoSection';
 import { WorkshopsSection } from '@/components/summit/WorkshopsSection';
@@ -84,6 +85,9 @@ export default function SummitPage() {
 
       {/* [001] About */}
       <AboutSection />
+
+      {/* Overview Deck */}
+      <InfoDeckSection />
 
       {/* [002] Summit Videos */}
       <SummitVideoSection />
