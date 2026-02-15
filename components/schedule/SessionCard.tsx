@@ -133,7 +133,7 @@ export function SessionCard({ session, date, summit }: SessionCardProps) {
               onClick={(e) => e.stopPropagation()}
             >
               <span>&gt;</span>
-              RSVP
+              {session.link.includes('maps.app.goo.gl') || session.link.includes('google.com/maps') ? 'Google Maps' : 'RSVP'}
               <span>↗</span>
             </a>
           )}

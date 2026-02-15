@@ -270,7 +270,7 @@ This page shows the current/upcoming summit. Past summits archived at `/summit/[
 7. **Sponsors**
    - Logo grid (equal sizing)
    - Clickable → opens sponsor site in new tab
-   - Current sponsors: Canaan, Compass Mining, Exergy, Human Rights Foundation, Ocean, Tessere
+   - Current sponsors: Canaan, Compass Mining, Exergy, Human Rights Foundation, Ocean, TESSERE
 
 8. **FAQ**
    - Expandable accordion

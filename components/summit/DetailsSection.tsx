@@ -28,7 +28,7 @@ export function DetailsSection({ summit, scheduleData }: DetailsSectionProps) {
               Doors, Registration & Breakfast: {formatTime(timing.doorsOpen)} MT<br />
               Welcome & Programming Start: {formatTime(timing.welcomeTime)} MT<br />
               Programming ends: {formatTime(timing.programmingEnd)} MT Saturday<br />
-              2x Evening Activities: Beer Garden Dinner & Hot Tub BBQ<br />
+              2x Evening Activities: <a href="https://maps.app.goo.gl/mqee1thTBQXGHgaa8" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">RiNo Beer Garden</a> Dinner & Hot Tub BBQ<br />
             </p>
           </div>
 
