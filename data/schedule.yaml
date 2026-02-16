@@ -159,19 +159,17 @@ days:
             affiliation: "Exergy"
         description: "Collaboratively outline industry standards with leading firm TESSERE and peers. This session tackles certification roadblocks, client education frameworks, and hybrid-system specifications surfaced in the Building With Intention panel. Outcome: A shared action plan to transform hashrate heating from prototype to approved architectural detail."
 
-      - id: "day1-workshop-boiler"
-        title: "Heatpunk Hydronics - Boiler Walkthrough"
+      - id: "day1-workshop-home-assistant"
+        title: "Home Assistant Deep Dive - Automating Hashrate Heat as IOT Devices"
         type: "workshop"
         start: "12:30"
         end: "13:15"
-        location: "Basement Boiler Room"
+        location: "Event Room"
         track: "breakout"
         speakers:
           - name: "Dylan Seib"
             affiliation: "Exergy"
-          - name: "Cody Harris"
-            affiliation: "Citadel Construction"
-        description: "Walk through Exergy's real-world installation: a water-cooled Bitcoin miner heating The Space's radiant floors via a plumber-led hydronic loop. We'll dissect control gaps (no fixed outlet temps, dynamic wattage-to-heat conversion) and workshop solutions to replicate traditional boiler logic atop hashrate heating. Join hydronics experts to confront the quirks of \"smart heat\" and define next-gen control schemas."
+        description: "Bitcoin miners are smart electric heaters with inherent IoT capabilities—connectivity, variable power control, and revenue generation. This workshop explores integrating them directly into Home Assistant, the open-source platform that unifies smart home devices. Led by Exergy's Dylan (creator of mining control integrations), we'll work with the building blocks of local automations, custom components, and logic flows to turn miners into responsive assets—triggered by thermostats, solar production, or energy prices. Learn to develop skills that synchronize heat, money, and energy within your sovereign home infrastructure—zero cloud required."
 
       - id: "day1-panel-control"
         title: "Set & Forget - Ideal Control for Hashrate Heat"
@@ -338,9 +336,10 @@ days:
         location: "Event Room"
         track: "main"
         status: "confirmed"
+        moderator:
+          name: "Colin Crossman"
+          affiliation: "Wyoming SoS"
         speakers:
-          - name: "Colin Crossman"
-            affiliation: "Wyoming SoS"
           - name: "Zack Cohen"
             affiliation: "Bitcoin Policy Institute"
           - name: "Seth Baylis"
@@ -357,9 +356,10 @@ days:
         location: "Event Room"
         track: "main"
         status: "confirmed"
+        moderator:
+          name: "Wyatt O'Rourke"
+          affiliation: "Basilic Financial"
         speakers:
-          - name: "Wyatt O'Rourke"
-            affiliation: "Basilic Financial"
           - name: "Greg Ranz"
             affiliation: "Revolution Mortgage"
           - name: "Daniel Kahn"
@@ -389,17 +389,31 @@ days:
             affiliation: "Exergy"
         description: "Canaan currently stands alone in committing to home-scale ASIC development. This rare workshop offers builders direct access to their team. Discuss firmware flexibility, thermal design priorities, and hardware modularity—including whether bare chips or open-source stacks better serve our community. Your field experience will help align Canaan's roadmap with real-world hashrate heating needs."
 
-      - id: "day2-workshop-home-assistant"
-        title: "Home Assistant Deep Dive - Automating Hashrate Heat as IOT Devices"
+      - id: "day2-workshop-tether-sdk"
+        title: "Intro to Mining SDK with Tether"
         type: "workshop"
         start: "12:30"
         end: "13:15"
         location: "Event Room"
         track: "breakout"
         speakers:
+          - name: "Gio Rasetto"
+            affiliation: "Tether"
+        description: "Bring your heat reuse ideas to Tether's open-source Mining SDK team. How can their Holepunch-based P2P platform—designed for self-hosted mining control—adapt to thermostats, circulator pumps, or district heating systems? Join Gio Rasetto (Tether Mining Analyst) to demo the SDK's foundations and collaborate on worker concepts that merge physical infrastructure with hashrate."
+
+      - id: "day2-workshop-boiler"
+        title: "Heatpunk Hydronics - Boiler Walkthrough"
+        type: "workshop"
+        start: "12:30"
+        end: "13:15"
+        location: "Basement Boiler Room"
+        track: "breakout"
+        speakers:
           - name: "Dylan Seib"
             affiliation: "Exergy"
-        description: "Bitcoin miners are smart electric heaters with inherent IoT capabilities—connectivity, variable power control, and revenue generation. This workshop explores integrating them directly into Home Assistant, the open-source platform that unifies smart home devices. Led by Exergy's Dylan (creator of mining control integrations), we'll work with the building blocks of local automations, custom components, and logic flows to turn miners into responsive assets—triggered by thermostats, solar production, or energy prices. Learn to develop skills that synchronize heat, money, and energy within your sovereign home infrastructure—zero cloud required."
+          - name: "Cody Harris"
+            affiliation: "Citadel Construction"
+        description: "Walk through Exergy's real-world installation: a water-cooled Bitcoin miner heating The Space's radiant floors via a plumber-led hydronic loop. We'll dissect control gaps (no fixed outlet temps, dynamic wattage-to-heat conversion) and workshop solutions to replicate traditional boiler logic atop hashrate heating. Join hydronics experts to confront the quirks of \"smart heat\" and define next-gen control schemas."
 
       - id: "day2-hardware-award"
         title: "Heatpunk Hardware Award Announcement"
@@ -465,9 +479,10 @@ days:
         location: "Event Room"
         track: "main"
         status: "confirmed"
+        moderator:
+          name: "Econoalchemist"
+          affiliation: "256 Foundation"
         speakers:
-          - name: "Econoalchemist"
-            affiliation: "256 Foundation"
           - name: "Skot9000"
             affiliation: "256 Foundation"
           - name: "Schnitzel"

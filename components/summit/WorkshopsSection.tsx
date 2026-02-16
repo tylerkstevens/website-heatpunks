@@ -7,9 +7,10 @@ interface WorkshopsSectionProps {
 // Short, landing-page specific descriptions for workshops
 const workshopSummaries: Record<string, string> = {
   'day1-workshop-architect': 'Work with leading architects to define industry standards for hashrate heating systems—from certifications to client education.',
-  'day1-workshop-boiler': 'Tour The Space\'s live bitcoin-heated radiant floor system. Learn hydronic integration challenges and control solutions from experts.',
+  'day2-workshop-boiler': 'Tour The Space\'s live bitcoin-heated radiant floor system. Learn hydronic integration challenges and control solutions from experts.',
+  'day1-workshop-home-assistant': 'Integrate miners into Home Assistant. Build automations triggered by thermostats, solar, and energy prices—no cloud required.',
   'day2-workshop-canaan': 'Direct access to Canaan\'s team. Share builder feedback on firmware, thermals, and hardware to shape home mining ASICs.',
-  'day2-workshop-home-assistant': 'Integrate miners into Home Assistant. Build automations triggered by thermostats, solar, and energy prices—no cloud required.',
+  'day2-workshop-tether-sdk': 'Explore Tether\'s open-source Mining SDK. Collaborate on adapting P2P mining control for thermostats and heating systems.',
 };
 
 export function WorkshopsSection({ workshops }: WorkshopsSectionProps) {
@@ -31,7 +32,7 @@ export function WorkshopsSection({ workshops }: WorkshopsSectionProps) {
         </div>
 
         {/* Workshop grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {workshops.length > 0 ? (
             workshops.map((workshop, index) => (
               <div
