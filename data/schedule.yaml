@@ -191,8 +191,8 @@ days:
             affiliation: "256 Foundation"
         description: "When your heater is an internet-connected money printer, \"set and forget\" demands new rules. This panel dissects control philosophy for hashrate heating: analog reliability vs. digital optimization, KISS principles vs. grid-aware automation, and standardization (BACNet/Home Assistant) vs. custom hacks. Experts debate failsafe requirements, optimization priorities, and whether smarter control truly delivers tighter thermal performance—without sacrificing robustness."
 
-      - id: "day1-fireside-canaan"
-        title: "Chip Builder Fireside - A Conversation with Canaan & Skot 9000"
+      - id: "day1-panel-chips"
+        title: "Chips on the Table: Home-Mining Hardware & ASIC For All"
         type: "panel"
         start: "14:05"
         end: "14:40"
@@ -200,12 +200,14 @@ days:
         track: "main"
         status: "confirmed"
         moderator:
-          name: "Skot9000"
-          affiliation: "256 Foundation"
+          name: "Tyler Stevens"
+          affiliation: "Exergy"
         speakers:
           - name: "Leo Wang"
             affiliation: "Canaan"
-        description: "Canaan bet against the grain—prioritizing home miners while rivals chased industrial scale. In this fireside chat, Canaan's Leo Wang and BitAxe creator Skot 9000 dissect the ASIC industry's toughest tensions: open-source vs. proprietary control, hyper-efficiency vs. accessible repurposing (should 'outdated' chips power heat reuse?), and whether chip-level sales could unlock hardware innovation. The goal? Pressure-test if home-focused ASICs can survive—and what Heatpunks need next."
+          - name: "Skot9000"
+            affiliation: "256 Foundation"
+        description: "Canaan is betting big on hashrate heating—a market 200x larger than industrial mining—while juggling Wall Street expectations and community demands for open hardware. Onstage, Leo Wang (Canaan) and Bitaxe's Skot dissect the realities: Can a public company reconcile Avalon's brand protection with heatpunks' chip-access needs? Should \"obsolete\" silicon power heaters instead of chasing max efficiency? And can the 256 Foundation's open stack bridge the corporate-community divide? Raw debate on scaling heat reuse without selling out."
 
       - id: "day1-panel-installer"
         title: "Boots on the Ground - Heatpunk Installer Success"
