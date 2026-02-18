@@ -207,7 +207,7 @@ days:
             affiliation: "Canaan"
           - name: "Skot9000"
             affiliation: "256 Foundation"
-        description: "Canaan is betting big on hashrate heating—a market 200x larger than industrial mining—while juggling Wall Street expectations and community demands for open hardware. Onstage, Leo Wang (Canaan) and Bitaxe's Skot dissect the realities: Can a public company reconcile Avalon's brand protection with heatpunks' chip-access needs? Should \"obsolete\" silicon power heaters instead of chasing max efficiency? And can the 256 Foundation's open stack bridge the corporate-community divide? Raw debate on scaling heat reuse without selling out."
+        description: "Canaan is exploring hashrate heating - a market 200x larger than industrial mining - while balancing public-company constraints with community innovation. Leo Wang (Canaan) and Bitaxe's Skot explore critical questions: Can last-gen silicon unlock affordable heat reuse? What role could Avalon hardware play in certified heating systems? How might open-source efforts like the 256 Foundation create opportunities for collaboration? A pragmatic discussion on aligning corporate scale with heatpunk needs."
 
       - id: "day1-panel-installer"
         title: "Boots on the Ground - Heatpunk Installer Success"
