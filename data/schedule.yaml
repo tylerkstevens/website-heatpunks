@@ -245,7 +245,7 @@ days:
             affiliation: "Maple AI"
           - name: "Matt Hill"
             affiliation: "Start9"
-          - name: "Gio Rasetto"
+          - name: "Gio"
             affiliation: "Tether"
         description: "Hashrate heaters—variable-BTU money printers—complete the sovereign home's physical layer. This panel explores integrating them with home servers and private AI into a unified stack: energy (self-powered resilience), money (private mining revenue), data (end-to-end encrypted control), and heat (survival necessity). We'll dissect architectures that make homes grid-optional, corporate-middleware-free, and intelligently adaptive, without compromising autonomy."
 
@@ -399,9 +399,9 @@ days:
         location: "Event Room"
         track: "breakout"
         speakers:
-          - name: "Gio Rasetto"
+          - name: "Gio"
             affiliation: "Tether"
-        description: "Bring your heat reuse ideas to Tether's open-source Mining SDK team. How can their Holepunch-based P2P platform—designed for self-hosted mining control—adapt to thermostats, circulator pumps, or district heating systems? Join Gio Rasetto (Tether Mining Analyst) to demo the SDK's foundations and collaborate on worker concepts that merge physical infrastructure with hashrate."
+        description: "Bring your heat reuse ideas to Tether's open-source Mining SDK team. How can their Holepunch-based P2P platform—designed for self-hosted mining control—adapt to thermostats, circulator pumps, or district heating systems? Join Gio (Tether Mining Analyst) to demo the SDK's foundations and collaborate on worker concepts that merge physical infrastructure with hashrate."
 
       - id: "day2-workshop-boiler"
         title: "Heatpunk Hydronics - Boiler Walkthrough"
