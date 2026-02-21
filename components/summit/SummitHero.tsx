@@ -60,7 +60,7 @@ export function SummitHero({ summit, sponsors, stats }: SummitHeroProps) {
             <span className="text-[var(--card-border)] hidden md:inline">|</span>
             <span>
               <span className="text-[var(--accent)]">STATUS:</span>{' '}
-              <span className="animate-blink">GET ON THE WAITLIST</span>
+              <span className="animate-blink">SOLD OUT</span>
             </span>
           </div>
 
@@ -70,7 +70,7 @@ export function SummitHero({ summit, sponsors, stats }: SummitHeroProps) {
               onClick={() => setIsModalOpen(true)}
               className="btn-primary group"
             >
-              <span className="relative z-10">REQUEST INVITATION</span>
+              <span className="relative z-10">REQUEST INVITE FOR HPS2027</span>
               <span className="btn-heat" />
             </button>
 

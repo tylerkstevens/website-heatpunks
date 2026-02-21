@@ -134,7 +134,7 @@ export function InvitationModal({ isOpen, onClose, year }: InvitationModalProps)
             </div>
             <h3 className="font-mono text-xl font-bold tracking-wide mb-2">REQUEST RECEIVED</h3>
             <p className="text-[var(--muted)] text-sm mb-6">
-              Thank you for your interest in Heatpunk Summit {year}. We&apos;ll review your request and get back to you soon.
+              Thank you for your interest in Heatpunk Summit 2027. We&apos;ll reach out when planning begins.
             </p>
             <button onClick={handleReset} className="btn-secondary">
               CLOSE
@@ -144,13 +144,13 @@ export function InvitationModal({ isOpen, onClose, year }: InvitationModalProps)
           <>
             {/* Header */}
             <div className="mb-6">
-              <span className="section-tag">[INVITATION]</span>
+              <span className="section-tag">[HPS 2027]</span>
               <h2 className="font-mono text-xl md:text-2xl font-bold tracking-wide mt-2">
-                REQUEST AN <span className="text-[var(--accent)]">INVITATION</span>
+                REQUEST AN INVITE FOR <span className="text-[var(--accent)]">HPS 2027</span>
               </h2>
               <p className="text-[var(--muted)] text-sm mt-3">
-                The Heatpunk Summit brings together builders actively working on hashrate heating.
-                We want to hear about your work and what you&apos;ll bring to the conversation.
+                Heatpunk Summit 2026 is sold out! Submit your interest for HPS 2027
+                and we&apos;ll reach out when planning begins.
               </p>
               <p className="text-[var(--muted)] text-sm mt-2">
                 Be honest—whether you&apos;re building, learning, or exploring, we value authentic contributors.
