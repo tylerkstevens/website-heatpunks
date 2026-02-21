@@ -52,6 +52,18 @@ export function SummitCommunitySection() {
             <span className="font-mono text-xs tracking-wider text-[var(--foreground)]">TELEGRAM</span>
             <span className="font-mono text-[10px] text-[var(--muted)]">t.me/heatpunks</span>
           </a>
+
+          {/* Nostr */}
+          <a
+            href={siteConfig.links.nostr}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="heatpunk-card flex flex-col items-center gap-2 text-center hover:border-[var(--terminal-color)] hover:shadow-[0_0_20px_rgba(0,255,65,0.15)] flex-1"
+          >
+            <span className="text-2xl text-[var(--terminal-color)] font-mono">N</span>
+            <span className="font-mono text-xs tracking-wider text-[var(--foreground)]">NOSTR</span>
+            <span className="font-mono text-[10px] text-[var(--muted)]">npub1mc88...xfcy</span>
+          </a>
         </div>
       </div>
     </section>

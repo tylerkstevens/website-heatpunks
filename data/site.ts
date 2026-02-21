@@ -13,6 +13,7 @@ export const siteConfig = {
     telegram: TELEGRAM_URL,
     twitter: 'https://x.com/HashHeatpunks',
     forum: FORUM_URL,
+    nostr: 'https://primal.net/heatpunks',
     foundation: 'https://256foundation.org',
     foundationGithub: 'https://github.com/256foundation',
   },

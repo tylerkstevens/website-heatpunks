@@ -87,6 +87,7 @@ export default function RootLayout({
                 'https://twitter.com/HashHeatpunks',
                 'https://forum.heatpunks.org',
                 'https://t.me/heatpunks',
+                'https://primal.net/heatpunks',
               ],
             }),
           }}

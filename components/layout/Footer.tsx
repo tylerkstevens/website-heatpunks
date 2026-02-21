@@ -126,8 +126,14 @@ export function Footer() {
               >
                 X / TWITTER
               </a>
-
-
+              <a
+                href={siteConfig.links.nostr}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              >
+                NOSTR
+              </a>
             </nav>
           </div>
         </div>
