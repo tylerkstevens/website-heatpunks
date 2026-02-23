@@ -108,8 +108,8 @@ days:
         track: "main"
         status: "confirmed"
         moderator:
-          name: "Rob Warren"
-          affiliation: "Bitcoin Park"
+          name: "Tyler Stevens"
+          affiliation: "Exergy"
         speakers:
           - name: "Christian Sartori"
             affiliation: "Digital Energy Development, MARA"
