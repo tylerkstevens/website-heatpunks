@@ -57,7 +57,7 @@ export function AboutSection() {
                 </li>
                 <li className="flex gap-3 text-[var(--muted)] text-sm">
                   <span className="font-mono text-[10px] text-[var(--accent)]">04</span>
-                  Dismantle the proprietary mining empire
+                  Build the open-source Bitcoin mining ecosystem
                 </li>
               </ul>
             </div>

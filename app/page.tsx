@@ -3,6 +3,7 @@ import { ForumFeed } from '@/components/landing/ForumFeed';
 import { CommunityGallery } from '@/components/landing/CommunityGallery';
 import { LinksSection } from '@/components/landing/LinksSection';
 import { GrantsSection } from '@/components/landing/GrantsSection';
+import { DonateSection } from '@/components/landing/DonateSection';
 import { ContactSection } from '@/components/landing/ContactSection';
 import { ForumSectionErrorBoundary } from '@/components/ErrorBoundary';
 import { getDiscourseData } from '@/lib/discourse';
@@ -20,6 +21,7 @@ export default async function HomePage() {
       </ForumSectionErrorBoundary>
       <LinksSection />
       <GrantsSection />
+      <DonateSection />
       <ContactSection />
     </div>
   );

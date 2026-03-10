@@ -50,10 +50,18 @@ export function HeroSection() {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <a
-            href={siteConfig.links.forum}
+            href={siteConfig.foundation.donate}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary group"
+          >
+            SUPPORT THE MISSION ↗
+          </a>
+          <a
+            href={siteConfig.links.forum}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-outline"
           >
             <span className="relative z-10">DIVE INTO FORUM</span>
             <span className="btn-heat" />
@@ -74,10 +82,6 @@ export function HeroSection() {
 
           <Link href="/education" className="btn-secondary">
             LEARN
-          </Link>
-
-          <Link href="/mission" className="btn-secondary">
-            OUR MISSION
           </Link>
         </div>
 

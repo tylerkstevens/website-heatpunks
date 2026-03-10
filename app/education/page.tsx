@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { siteConfig } from '@/data/site';
 import { BookSection } from '@/components/education/BookSection';
 import { VideoSection } from '@/components/education/VideoSection';
 import { summit2026Videos, summit2025Videos } from '@/data/videos';
@@ -59,9 +60,21 @@ export default function EducationPage() {
               Tutorials, technical guides, installation documentation, safety standards —
               this content doesn&apos;t exist yet because we&apos;re the ones creating it.
             </p>
-            <p className="text-[var(--muted)] text-sm leading-relaxed max-w-2xl">
+            <p className="text-[var(--muted)] text-sm leading-relaxed max-w-2xl mb-4">
               Want to help build this industry? The 256 Foundation funds educational content,
               documentation, and training materials through our grants program.
+            </p>
+            <p className="text-sm text-[var(--muted)] leading-relaxed max-w-2xl">
+              Support this work —{' '}
+              <a
+                href={siteConfig.foundation.donate}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--accent)] hover:underline"
+              >
+                Donations to the 256 Foundation
+              </a>{' '}
+              fund free educational content for the hashrate heating industry.
             </p>
           </div>
 

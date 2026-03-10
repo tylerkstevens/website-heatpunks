@@ -238,7 +238,15 @@ export default function MissionPage() {
               <span className="relative z-10">APPLY FOR A GRANT</span>
               <span className="btn-heat" />
             </Link>
-            <Link href="/education" className="btn-outline">
+            <a
+              href={siteConfig.foundation.donate}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline"
+            >
+              SUPPORT THE MISSION ↗
+            </a>
+            <Link href="/education" className="btn-secondary">
               LEARN MORE
             </Link>
             <a

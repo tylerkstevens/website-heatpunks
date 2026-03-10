@@ -24,7 +24,7 @@ export const siteConfig = {
 
   foundation: {
     name: '256 Foundation',
-    mission: 'dismantling the proprietary mining empire',
+    mission: 'building the open-source Bitcoin mining ecosystem',
     url: 'https://256foundation.org',
     github: 'https://github.com/256foundation',
     donate: DONATE_URL,
