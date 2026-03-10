@@ -23,7 +23,7 @@ export function TopicsSection() {
         <div className="mb-8">
           <span className="section-tag">[004]</span>
           <h2 className="font-mono text-2xl md:text-3xl font-bold tracking-wide mt-2">
-            <span className="text-[var(--accent)]">TOPICS</span>
+            <span className="text-[var(--accent)]">TOPICS COVERED</span>
           </h2>
         </div>
 

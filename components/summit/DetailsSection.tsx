@@ -50,23 +50,13 @@ export function DetailsSection({ summit, scheduleData }: DetailsSectionProps) {
             <div className="absolute -top-2.5 left-4 bg-[var(--terminal-color)] text-[var(--background)] font-mono text-[10px] font-bold px-3 py-0.5 tracking-wider">
               OPEN TO ALL
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <h3 className="font-mono text-sm font-bold text-[var(--foreground)] mb-1">
-                  Welcome Happy Hour — Feb 26, 5-8 PM
-                </h3>
-                <p className="text-sm text-[var(--muted)]">
-                  No summit ticket required! Come meet the heatpunk community.
-                </p>
-              </div>
-              <a
-                href={happyHourLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-outline whitespace-nowrap border-[var(--terminal-color)] text-[var(--terminal-color)] hover:bg-[var(--terminal-color)] hover:text-[var(--background)]"
-              >
-                RSVP FREE ↗
-              </a>
+            <div>
+              <h3 className="font-mono text-sm font-bold text-[var(--foreground)] mb-1">
+                Welcome Happy Hour — Feb 26, 5-8 PM
+              </h3>
+              <p className="text-sm text-[var(--muted)]">
+                The community came together the evening before the summit — no ticket required.
+              </p>
             </div>
           </div>
         </div>

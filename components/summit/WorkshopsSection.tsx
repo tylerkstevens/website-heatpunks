@@ -6,11 +6,11 @@ interface WorkshopsSectionProps {
 
 // Short, landing-page specific descriptions for workshops
 const workshopSummaries: Record<string, string> = {
-  'day1-workshop-architect': 'Work with leading architects to define industry standards for hashrate heating systems—from certifications to client education.',
-  'day2-workshop-boiler': 'Tour The Space\'s live bitcoin-heated radiant floor system. Learn hydronic integration challenges and control solutions from experts.',
-  'day1-workshop-home-assistant': 'Integrate miners into Home Assistant. Build automations triggered by thermostats, solar, and energy prices—no cloud required.',
-  'day2-workshop-canaan': 'Direct access to Canaan\'s team. Share builder feedback on firmware, thermals, and hardware to shape home mining ASICs.',
-  'day2-workshop-tether-sdk': 'Explore Tether\'s open-source Mining SDK. Collaborate on adapting P2P mining control for thermostats and heating systems.',
+  'day1-workshop-architect': 'Attendees worked with leading architects to define industry standards for hashrate heating systems—from certifications to client education.',
+  'day2-workshop-boiler': 'Toured The Space\'s live bitcoin-heated radiant floor system. Explored hydronic integration challenges and control solutions from experts.',
+  'day1-workshop-home-assistant': 'Integrated miners into Home Assistant. Built automations triggered by thermostats, solar, and energy prices—no cloud required.',
+  'day2-workshop-canaan': 'Direct access to Canaan\'s team. Builders shared feedback on firmware, thermals, and hardware to shape home mining ASICs.',
+  'day2-workshop-tether-sdk': 'Explored Tether\'s open-source Mining SDK. Collaborated on adapting P2P mining control for thermostats and heating systems.',
 };
 
 export function WorkshopsSection({ workshops }: WorkshopsSectionProps) {
@@ -27,7 +27,7 @@ export function WorkshopsSection({ workshops }: WorkshopsSectionProps) {
             2026 <span className="text-[var(--accent)]">WORKSHOPS</span>
           </h2>
           <p className="text-[var(--muted)] text-sm mt-2">
-            New this year: dedicated sessions pairing builders to tackle challenges together.
+            Dedicated sessions pairing builders to tackle real-world challenges together.
           </p>
         </div>
 

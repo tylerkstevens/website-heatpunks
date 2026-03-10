@@ -6,8 +6,7 @@ interface PageProps {
   params: Promise<{ year: string }>;
 }
 
-// For now, only 2025 is available as an archive
-const archivedYears = ['2025'];
+const archivedYears = ['2025', '2026'];
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { year } = await params;

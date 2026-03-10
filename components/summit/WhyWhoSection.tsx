@@ -1,7 +1,7 @@
 const whyReasons = [
-  { title: 'See Innovation:', text: 'New systems, products, software and live demos' },
-  { title: 'Solve Challenges:', text: 'Facing a hurdle? Find the solution here' },
-  { title: 'Connect:', text: 'Meet hyper-focused builders pushing hashrate heating' },
+  { title: 'Saw Innovation:', text: 'New systems, products, software and live demos' },
+  { title: 'Solved Challenges:', text: 'Builders tackled real-world hurdles together' },
+  { title: 'Connected:', text: 'Met hyper-focused builders pushing hashrate heating' },
 ];
 
 const attendees = [
@@ -26,7 +26,7 @@ export function WhyWhoSection() {
           {/* Why Attend */}
           <div className="heatpunk-card">
             <h3 className="font-mono text-sm font-bold tracking-wide mb-4 flex items-center gap-2">
-              <span className="text-[var(--accent)]">▲</span> WHY ATTEND
+              <span className="text-[var(--accent)]">▲</span> WHY THEY ATTENDED
             </h3>
             <ul className="space-y-3">
               {whyReasons.map((reason) => (

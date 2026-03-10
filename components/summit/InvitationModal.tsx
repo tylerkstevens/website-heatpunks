@@ -149,7 +149,7 @@ export function InvitationModal({ isOpen, onClose, year }: InvitationModalProps)
                 REQUEST AN INVITE FOR <span className="text-[var(--accent)]">HPS 2027</span>
               </h2>
               <p className="text-[var(--muted)] text-sm mt-3">
-                Heatpunk Summit 2026 is sold out! Submit your interest for HPS 2027
+                Heatpunk Summit 2026 was a huge success! Submit your interest for HPS 2027
                 and we&apos;ll reach out when planning begins.
               </p>
               <p className="text-[var(--muted)] text-sm mt-2">

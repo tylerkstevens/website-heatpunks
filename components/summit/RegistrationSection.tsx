@@ -17,54 +17,26 @@ export function RegistrationSection() {
         <div className="mb-8">
           <span className="section-tag">[006]</span>
           <h2 className="font-mono text-2xl md:text-3xl font-bold tracking-wide mt-2">
-            <span className="text-[var(--accent)]">REGISTRATION</span>
+            HEATPUNK SUMMIT <span className="text-[var(--accent)]">2027</span>
           </h2>
-        </div>
-
-        {/* Pricing cards */}
-        <div className="grid sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-8">
-          {/* General */}
-          <div className="bg-[var(--card-background)] border border-[var(--card-border)] p-6 text-center">
-            <div className="font-mono text-[10px] tracking-wider text-[var(--muted)] mb-2">
-              GENERAL
-            </div>
-            <div className="font-mono text-3xl font-bold text-[var(--foreground)]">
-              210,000 <span className="text-lg text-[var(--accent)]">SATS</span>
-            </div>
-            <p className="font-mono text-xs text-[var(--muted)] mt-2">
-              Sessions + Meals + After Party
-            </p>
-          </div>
-
-          {/* Member */}
-          <div className="bg-[var(--card-background)] border-2 border-[var(--accent)] p-6 text-center relative">
-            <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-[var(--accent)] text-[var(--background)] font-mono text-[10px] font-bold px-3 py-0.5 tracking-wider">
-              MEMBER
-            </div>
-            <div className="font-mono text-[10px] tracking-wider text-[var(--muted)] mb-2">
-              THE SPACE
-            </div>
-            <div className="font-mono text-3xl font-bold text-[var(--foreground)]">
-              50% <span className="text-lg text-[var(--accent)]">OFF</span>
-            </div>
-            <p className="font-mono text-xs text-[var(--muted)] mt-2">
-              All benefits at half price
-            </p>
-          </div>
+          <p className="text-[var(--muted)] text-sm mt-3 max-w-xl">
+            Summit 2026 was a huge success. Planning is beginning for HPS2027.
+            Request your invite to be notified when tickets open.
+          </p>
         </div>
 
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
           <button
             onClick={() => setIsModalOpen(true)}
             className="btn-primary"
           >
-            <span className="relative z-10">REQUEST INVITATION</span>
+            <span className="relative z-10">REQUEST INVITE FOR HPS2027</span>
             <span className="btn-heat" />
           </button>
 
           <a
-            href={`mailto:${siteConfig.contact.email}?subject=Summit 2026 Sponsorship`}
+            href={`mailto:${siteConfig.contact.email}?subject=Summit 2027 Sponsorship`}
             className="btn-outline"
           >
             SPONSOR / DEMO INQUIRY
@@ -75,7 +47,7 @@ export function RegistrationSection() {
       <InvitationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        year={2026}
+        year={2027}
       />
     </section>
   );

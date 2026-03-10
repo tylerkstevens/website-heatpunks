@@ -3,27 +3,27 @@ import type { FAQItem } from '@/types/schedule';
 
 const faqItems: FAQItem[] = [
   {
-    question: 'How much does it cost to attend?',
-    answer: '2026 General admission is 210,000 sats. This includes all sessions, meals, and the after-party. Space members receive a 50% discount.',
+    question: 'How much did it cost to attend?',
+    answer: '2026 General admission was 210,000 sats. This included all sessions, meals, and the after-party. Space members received a 50% discount.',
   },
   {
-    question: 'Is there a waitlist?',
-    answer: 'Yes! We have limited capacity of ~150 builders. Email admin@heatpunks.org to get on the waitlist.',
+    question: 'Was there a waitlist?',
+    answer: 'Yes — the event sold out with ~150 builders. Request your invite for HPS 2027 to be notified when planning begins.',
   },
   {
-    question: 'What should I bring?',
-    answer: 'Bring your laptop if you want to participate in certain workshops. The venue has WiFi. Dress is casual.',
+    question: 'What did attendees bring?',
+    answer: 'Attendees brought laptops for certain workshops. The venue had WiFi. Dress was casual.',
   },
   {
-    question: 'Can I demo my product?',
-    answer: 'Yes! We demonstrate hashrate heating products throughout the event. Contact us to arrange a product demonstrations.',
+    question: 'Were product demos featured?',
+    answer: 'Yes! Hashrate heating products were demonstrated throughout the event. Interested in demoing at HPS 2027? Contact admin@heatpunks.org.',
   },
   {
-    question: 'Is the ski day included?',
-    answer: 'The ski day on February 26th is optional and organized separately. You are required to organize your own ski pass and ski rentals. Details will be shared with registered attendees.',
+    question: 'Was the ski day included?',
+    answer: 'The ski day on February 26th was optional and organized separately. Attendees arranged their own ski passes and rentals.',
   },
   {
-    question: 'How do I get from the airport?',
+    question: 'How do you get from the airport?',
     answer: 'The A Line train runs directly from DIA to downtown Denver. The venue in RiNo is accessible via rideshare or a short walk from the 38th & Blake station.',
   },
 ];

@@ -31,7 +31,7 @@ export function AboutSection() {
               bringing hashrate back home into heating appliances and infrastructure.
             </p>
             <p className="text-[var(--muted)] text-sm leading-relaxed mb-8">
-              This summit brings together all key stakeholders pushing forward the emerging industry
+              This summit brought together all key stakeholders pushing forward the emerging industry
               of hashrate heating. ASIC Designers, FOSS Developers, Firmware Builders, Control Experts,
               Heating Industry Veterans, Plumbers, HVAC Techs, Home Insurers, System Builders,
               Pleb Miners and more — <span className="text-highlight">All in the Same Room.</span>

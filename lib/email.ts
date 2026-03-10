@@ -193,7 +193,7 @@ export async function sendSummitInvitation(data: SummitInvitationData): Promise<
   const summitEmail = process.env.SUMMIT_EMAIL || 'summit@heatpunks.org';
 
   const textContent = `
-SUMMIT 2026 INVITATION REQUEST
+SUMMIT 2027 INVITATION REQUEST
 ==============================
 
 APPLICANT INFORMATION
@@ -213,7 +213,7 @@ ${data.contribution}
   `.trim();
 
   const htmlContent = `
-<h1 style="color: #f97316; border-bottom: 2px solid #f97316; padding-bottom: 10px;">Summit 2026 Invitation Request</h1>
+<h1 style="color: #f97316; border-bottom: 2px solid #f97316; padding-bottom: 10px;">Summit 2027 Invitation Request</h1>
 
 <h2 style="color: #333; margin-top: 24px;">Applicant Information</h2>
 <table style="border-collapse: collapse; width: 100%; max-width: 600px;">
@@ -239,7 +239,7 @@ ${escapeHtml(data.contribution).replace(/\n/g, '<br>')}
       from: process.env.SMTP_USER,
       to: summitEmail,
       replyTo: data.email,
-      subject: `[Summit 2026] Invitation Request - ${data.name} (${data.company})`,
+      subject: `[Summit 2027] Invitation Request - ${data.name} (${data.company})`,
       text: textContent,
       html: htmlContent,
     });

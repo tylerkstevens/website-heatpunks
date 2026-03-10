@@ -60,7 +60,7 @@ export function SummitHero({ summit, sponsors, stats }: SummitHeroProps) {
             <span className="text-[var(--card-border)] hidden md:inline">|</span>
             <span>
               <span className="text-[var(--accent)]">STATUS:</span>{' '}
-              <span className="animate-blink">SOLD OUT</span>
+              <span className="animate-blink">CONCLUDED</span>
             </span>
           </div>
 
@@ -75,12 +75,10 @@ export function SummitHero({ summit, sponsors, stats }: SummitHeroProps) {
             </button>
 
             <a
-              href="https://www.youtube.com/watch?v=c-NrYzmPRv8"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/education"
               className="btn-secondary"
             >
-              WATCH 2025 RECAP
+              VIEW RECORDINGS
             </a>
 
             <a

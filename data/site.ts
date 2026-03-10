@@ -44,14 +44,7 @@ export const navigation: NavItem[] = [
   { name: 'Mission', href: '/mission' },
   { name: 'Education', href: '/education' },
   { name: 'Grants', href: '/grants' },
-  {
-    name: 'Summit',
-    href: '/summit',
-    children: [
-      { name: 'Overview', href: '/summit' },
-      { name: 'Schedule', href: '/summit/schedule' },
-    ]
-  },
+  { name: 'Summit', href: '/summit' },
   { name: 'Forum', href: FORUM_URL, external: true },
   { name: 'Group Chat', href: TELEGRAM_URL, external: true },
   { name: 'Donate', href: DONATE_URL, external: true, variant: 'outline' },

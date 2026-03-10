@@ -18,10 +18,10 @@ import { getSessionsByType } from '@/lib/scheduleUtils';
 
 export const metadata: Metadata = {
   title: 'Summit 2026',
-  description: 'Heatpunk Summit 2026 - February 27-28 in Denver, CO. Join 150+ builders for workshops, demos, and networking.',
+  description: 'Heatpunk Summit 2026 - February 27-28 in Denver, CO. 150+ builders gathered for workshops, demos, and networking.',
   openGraph: {
     title: 'Summit 2026 | Hashrate Heatpunks',
-    description: 'Heatpunk Summit 2026 - February 27-28 in Denver, CO. Join 150+ builders for workshops, demos, and networking.',
+    description: 'Heatpunk Summit 2026 - February 27-28 in Denver, CO. 150+ builders gathered for workshops, demos, and networking.',
     images: ['/api/og?title=HEATPUNK%20SUMMIT&subtitle=FEB%2027-28%2C%202026%20%E2%80%A2%20DENVER%2C%20CO&page=summit'],
   },
 };
@@ -34,7 +34,7 @@ const eventSchema = {
   description: 'Annual gathering of hashrate heating builders, featuring workshops, demos, and networking.',
   startDate: '2026-02-27',
   endDate: '2026-02-28',
-  eventStatus: 'https://schema.org/EventScheduled',
+  eventStatus: 'https://schema.org/EventCompleted',
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
   location: {
     '@type': 'Place',

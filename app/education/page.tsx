@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { BookSection } from '@/components/education/BookSection';
 import { VideoSection } from '@/components/education/VideoSection';
+import { summit2026Videos, summit2025Videos } from '@/data/videos';
 
 export const metadata: Metadata = {
   title: 'Resources',
@@ -42,13 +43,14 @@ export default function EducationPage() {
       </section>
 
       <BookSection />
-      <VideoSection />
+      <VideoSection year={2026} videos={summit2026Videos} sectionTag="[002]" />
+      <VideoSection year={2025} videos={summit2025Videos} sectionTag="[003]" />
 
       {/* More Resources Section */}
       <section className="py-16 md:py-24 bg-[var(--background-alt)] border-t border-[var(--card-border)]">
         <div className="section-container">
           <div className="mb-8">
-            <span className="section-tag">[003]</span>
+            <span className="section-tag">[004]</span>
             <h2 className="font-mono text-2xl md:text-3xl font-bold tracking-wide mt-2 mb-4">
               MORE RESOURCES IN <span className="text-[var(--accent)]">DEVELOPMENT</span>
             </h2>
