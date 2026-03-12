@@ -31,11 +31,11 @@ function getTransporter() {
 
 export async function sendContactEmail({ name, email, message }: SendEmailParams): Promise<boolean> {
   const transporter = getTransporter();
-  const contactEmail = process.env.CONTACT_EMAIL || 'contact@heatpunks.org';
+  const contactEmail = 'admin@heatpunks.org';
 
   try {
     await transporter.sendMail({
-      from: process.env.SMTP_USER,
+      from: 'Hashrate Heatpunks <admin@heatpunks.org>',
       to: contactEmail,
       replyTo: email,
       subject: `[Heatpunks Contact] Message from ${name}`,
@@ -64,7 +64,7 @@ ${message}
 
 export async function sendGrantApplication(application: GrantApplication): Promise<boolean> {
   const transporter = getTransporter();
-  const grantsEmail = process.env.GRANTS_EMAIL || 'grants@heatpunks.org';
+  const grantsEmail = 'admin@heatpunks.org';
 
   const categoryLabel = categoryOptions.find(c => c.value === application.category)?.label || application.category;
 
@@ -173,7 +173,7 @@ ${escapeHtml(application.background).replace(/\n/g, '<br>')}
 
   try {
     await transporter.sendMail({
-      from: process.env.SMTP_USER,
+      from: 'Hashrate Heatpunks <admin@heatpunks.org>',
       to: grantsEmail,
       replyTo: application.email,
       subject: `[Heatpunks Grant] ${application.projectTitle} - ${application.name}`,
@@ -190,7 +190,7 @@ ${escapeHtml(application.background).replace(/\n/g, '<br>')}
 
 export async function sendSummitInvitation(data: SummitInvitationData): Promise<boolean> {
   const transporter = getTransporter();
-  const summitEmail = process.env.SUMMIT_EMAIL || 'summit@heatpunks.org';
+  const summitEmail = 'admin@heatpunks.org';
 
   const textContent = `
 SUMMIT 2027 INVITATION REQUEST
@@ -236,7 +236,7 @@ ${escapeHtml(data.contribution).replace(/\n/g, '<br>')}
 
   try {
     await transporter.sendMail({
-      from: process.env.SMTP_USER,
+      from: 'Hashrate Heatpunks <admin@heatpunks.org>',
       to: summitEmail,
       replyTo: data.email,
       subject: `[Summit 2027] Invitation Request - ${data.name} (${data.company})`,
